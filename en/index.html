@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Wild Goat - Mountain Experiences in Crete</title>
+  <meta name="description" content="The Wild Goat offers guided mountain experiences in Crete, Greece. Summit expeditions, gorge traversals, sunrise hikes and multi-day traverses across the White Mountains, Psiloritis and Dikti. Plan your adventure with us on Instagram, Facebook or Viber."/>
+  <meta name="theme-color" content="#0b100d"/>
+
+  <!-- Favicon (your logo) -->
+  <link rel="icon" type="image/png" href="/logo.png"/>
+  <link rel="apple-touch-icon" href="/logo.png"/>
+
+  <!-- Open Graph (link preview on Facebook, Instagram, Viber, WhatsApp) -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="The Wild Goat - Mountain Experiences in Crete"/>
+  <meta property="og:description" content="Guided mountain experiences in Crete. Summits, gorges and sunrise hikes across the White Mountains, Psiloritis and Dikti."/>
+  <meta property="og:image" content="/logo.png"/>
+  <meta property="og:locale" content="en_GB"/>
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="The Wild Goat - Mountain Experiences in Crete"/>
+  <meta name="twitter:description" content="Guided mountain experiences in Crete. Summits, gorges and sunrise hikes across the White Mountains, Psiloritis and Dikti."/>
+  <meta name="twitter:image" content="/logo.png"/>
+
+  <!-- Local SEO: geo tags -->
+  <meta name="geo.region" content="GR-M"/>
+  <meta name="geo.placename" content="Crete, Greece"/>
+  <meta name="geo.position" content="35.2401;24.8093"/>
+  <meta name="ICBM" content="35.2401, 24.8093"/>
+
+  <!-- Structured data: tells Google you are a real local business -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SportsActivityLocation",
+    "name": "The Wild Goat",
+    "alternateName": "Αγριοκάτσικο",
+    "description": "Guided mountain experiences in Crete, Greece. Summit expeditions, gorge traversals, sunrise hikes and multi-day traverses across the White Mountains (Lefka Ori), Psiloritis and Dikti.",
+    "sport": "Hiking",
+    "areaServed": [
+      { "@type": "Place", "name": "Lefka Ori (White Mountains), Crete" },
+      { "@type": "Place", "name": "Psiloritis (Mount Ida), Crete" },
+      { "@type": "Place", "name": "Dikti, Crete" }
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": "Crete",
+      "addressCountry": "GR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 35.2401,
+      "longitude": 24.8093
+    },
+    "knowsLanguage": ["en", "el"],
+    "sameAs": [
+      "https://www.instagram.com/thewildgoat",
+      "https://www.facebook.com/TheWildGoat.Crete"
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Commissioner:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f5eede; --surface: #fffef8; --surface-2: #ece2cf;
+      --stone: #433c2b; --stone-dim: #6c6450; --sage: #5d6e47;
+      --sage-light: #5d6e47; --terracotta: #be541f; --accent-bright: #be541f; --gold: #9c7a22;
+      --white: #2a281d; --nav-h: 72px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--stone); font-family: 'Commissioner', sans-serif; font-weight: 300; font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--sage); border-radius: 2px; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 5vw; transition: background .4s; }
+    nav::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to bottom, rgba(11,16,13,.7) 0%, rgba(11,16,13,0) 100%); pointer-events: none; transition: opacity .4s; }
+    nav.scrolled { background: rgba(11,16,13,.95); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(107,124,90,.2); }
+    nav.scrolled::before { opacity: 0; }
+    .nav-logo { display: flex; align-items: center; gap: .6rem; font-family: 'EB Garamond', serif; font-size: 1.32rem; font-weight: 600; letter-spacing: .05em; color: var(--white); text-decoration: none; text-shadow: 0 1px 12px rgba(0,0,0,.6); }
+    .nav-logo span { color: var(--terracotta); }
+    .nav-logo img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; box-shadow: 0 2px 10px rgba(0,0,0,.5); }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a { color: var(--stone); text-decoration: none; font-size: .66rem; letter-spacing: .18em; text-transform: uppercase; transition: color .3s; text-shadow: 0 1px 8px rgba(0,0,0,.7); }
+    .nav-links a:hover { color: var(--terracotta); }
+    .nav.scrolled .nav-links a { text-shadow: none; }
+    .nav-social { display: flex; gap: 1rem; align-items: center; }
+    .nav-social a { color: var(--stone); transition: color .3s; display: flex; align-items: center; filter: drop-shadow(0 1px 6px rgba(0,0,0,.7)); }
+    .nav-social a:hover { color: var(--terracotta); }
+    .nav-right { display: flex; align-items: center; gap: 1.1rem; }
+    .lang-switch { display: flex; align-items: center; gap: .35rem; font-size: .68rem; letter-spacing: .1em; font-weight: 500; }
+    .lang-switch a { color: var(--stone); text-decoration: none; transition: color .3s; text-shadow: 0 1px 8px rgba(0,0,0,.7); }
+    .lang-switch a:hover { color: var(--terracotta); }
+    .lang-switch a.active { color: var(--terracotta); }
+    .lang-switch .sep { color: var(--stone-dim); opacity: .55; }
+    nav.scrolled .lang-switch a { text-shadow: none; }
+    .mm-lang { display: flex; gap: 1.25rem; margin-top: 1.25rem; font-size: 1.1rem; letter-spacing: .1em; }
+    .mm-lang a { color: var(--stone-dim); text-decoration: none; transition: color .3s; }
+    .mm-lang a.active { color: var(--terracotta); }
+    .mm-lang a:hover { color: var(--terracotta); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+    .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--stone); transition: transform .3s, opacity .3s; }
+    .mobile-menu { display: none; position: fixed; inset: 0; z-index: 190; background: rgba(11,16,13,.97); flex-direction: column; align-items: center; justify-content: center; gap: 1.75rem; overflow-y: auto; padding: 2rem 0; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: 'EB Garamond', serif; font-size: 2.2rem; font-weight: 300; color: var(--stone); text-decoration: none; transition: color .3s; min-height: 44px; display: flex; align-items: center; }
+    .mobile-menu a:hover { color: var(--terracotta); }
+    .mm-social { display: flex; gap: 2rem; margin-top: 1rem; }
+    .mm-social a { color: var(--stone-dim); transition: color .3s; min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
+    .mm-social a:hover { color: var(--terracotta); }
+
+    .mobile-bottom-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 150; background: rgba(11,16,13,.97); backdrop-filter: blur(12px); border-top: 1px solid rgba(107,124,90,.2); padding: .5rem 0; flex-direction: row; justify-content: space-around; align-items: center; }
+    .mobile-bottom-bar a { display: flex; flex-direction: column; align-items: center; gap: .25rem; color: var(--stone-dim); text-decoration: none; font-size: .5rem; letter-spacing: .1em; text-transform: uppercase; transition: color .3s; min-width: 56px; min-height: 56px; justify-content: center; }
+    .mobile-bottom-bar a:hover { color: var(--terracotta); }
+
+    #hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .hero-photo { position: absolute; inset: -20%; background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&q=85&fit=crop&auto=format'); background-size: cover; background-position: center 60%; will-change: transform; }
+    .hero-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(11,16,13,.6) 0%, rgba(11,16,13,.35) 35%, rgba(11,16,13,.45) 60%, rgba(11,16,13,.92) 100%); }
+    .hero-photo::before { content: ''; position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse 70% 55% at 50% 48%, rgba(11,16,13,.55) 0%, rgba(11,16,13,0) 70%); }
+    .hero-content { position: relative; z-index: 10; text-align: center; padding: 0 5vw; }
+    .hero-eyebrow { display: inline-block; font-size: .64rem; letter-spacing: .26em; text-transform: uppercase; color: var(--accent-bright); font-weight: 600; margin-bottom: 1.6rem; padding: .45rem 1.1rem; background: rgba(11,16,13,.45); backdrop-filter: blur(4px); border: 1px solid rgba(240,134,63,.35); border-radius: 2px; text-shadow: 0 2px 10px rgba(0,0,0,.9); animation: fadeUp 1.2s .2s ease both; }
+    .hero-title { font-family: 'EB Garamond', serif; font-size: clamp(3rem, 7.5vw, 6.6rem); font-weight: 400; line-height: .94; color: var(--white); margin-bottom: 2rem; text-shadow: 0 4px 30px rgba(0,0,0,.65), 0 2px 8px rgba(0,0,0,.5); animation: fadeUp 1.2s .35s ease both; }
+    .hero-title em { font-style: italic; color: var(--terracotta); }
+    .hero-sub { font-size: clamp(.82rem, 1.3vw, .95rem); letter-spacing: .06em; color: var(--white); max-width: 500px; margin: 0 auto 2.5rem; text-shadow: 0 2px 16px rgba(0,0,0,.85), 0 1px 4px rgba(0,0,0,.6); animation: fadeUp 1.2s .5s ease both; }
+    .hero-cta { display: inline-flex; align-items: center; gap: .75rem; padding: .8rem 2.25rem; background: rgba(11,16,13,.45); backdrop-filter: blur(4px); border: 1px solid rgba(240,134,63,.4); border-radius: 2px; color: var(--accent-bright); text-decoration: none; font-size: .68rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,.9); transition: background .3s, color .3s, border-color .3s; animation: fadeUp 1.2s .65s ease both; min-height: 44px; }
+    .hero-cta:hover { background: var(--terracotta); border-color: var(--terracotta); color: var(--white); text-shadow: none; }
+    .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; flex-direction: column; align-items: center; gap: .5rem; color: var(--stone-dim); font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; animation: fadeUp 1.2s 1s ease both; }
+    .scroll-line { width: 1px; height: 48px; background: linear-gradient(to bottom, var(--stone-dim), transparent); animation: scrollPulse 2s 1.5s ease-in-out infinite; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes scrollPulse { 0%,100%{opacity:.4} 50%{opacity:1} }
+
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 5vw; }
+    .section-label { font-size: .68rem; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--accent-bright); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+    .section-label::before { content: ''; display: block; width: 32px; height: 2px; background: var(--terracotta); }
+    .section-title { font-family: 'EB Garamond', serif; font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 300; line-height: 1.1; color: var(--white); }
+    .section-title em { font-style: italic; color: var(--stone-dim); }
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    #about { padding: 8rem 0; background: var(--surface); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+    .about-img-wrap { position: relative; }
+    .about-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+    .about-accent { position: absolute; bottom: -2rem; right: -2rem; width: 160px; height: 160px; background: var(--terracotta); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .25rem; }
+    .about-accent .num { font-family: 'EB Garamond', serif; font-size: 3rem; font-weight: 300; color: var(--white); line-height: 1; font-variant-numeric: lining-nums tabular-nums; font-feature-settings: "lnum" 1, "tnum" 1; }
+    .about-accent .lbl { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(240,236,226,.75); }
+    .about-body { color: var(--stone-dim); line-height: 1.8; margin-bottom: 1.5rem; font-size: .95rem; font-weight: 400; }
+    .stat-row { display: flex; gap: 3rem; margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid rgba(107,124,90,.2); flex-wrap: wrap; }
+    .stat .num { font-family: 'EB Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--white); line-height: 1; font-variant-numeric: lining-nums tabular-nums; font-feature-settings: "lnum" 1, "tnum" 1; }
+    .stat .lbl { font-size: .7rem; letter-spacing: .1em; color: var(--stone-dim); }
+
+    #weather { padding: 5rem 0; background: var(--bg); }
+    .weather-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .weather-card { background: var(--surface); border: 1px solid rgba(107,124,90,.15); padding: 2rem; text-align: center; }
+    .weather-peak { font-size: .65rem; letter-spacing: .25em; text-transform: uppercase; color: var(--terracotta); margin-bottom: .75rem; }
+    .weather-temp { font-family: 'EB Garamond', serif; font-size: 3.5rem; font-weight: 300; color: var(--white); line-height: 1; min-height: 3.5rem; display: flex; align-items: center; justify-content: center; font-variant-numeric: lining-nums tabular-nums; font-feature-settings: "lnum" 1, "tnum" 1; }
+    .weather-unit { font-size: 1.2rem; vertical-align: super; }
+    .weather-desc { font-size: .85rem; color: var(--stone-dim); margin-top: .5rem; }
+    .weather-wind { font-size: .75rem; color: var(--stone-dim); margin-top: .35rem; }
+
+    #mountains { padding: 8rem 0; background: var(--surface); }
+    .mountains-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem; }
+    .mountain-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; }
+    .mountain-card { position: relative; overflow: hidden; aspect-ratio: 2/3; cursor: pointer; }
+    .card-photo { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform .6s ease; }
+    .mountain-card:hover .card-photo { transform: scale(1.06); }
+    .card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(11,16,13,.95) 0%, transparent 55%); }
+    .card-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem; }
+    .card-alt { font-size: .72rem; letter-spacing: .2em; color: var(--terracotta); text-transform: uppercase; margin-bottom: .5rem; }
+    .card-name { font-family: 'EB Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--white); line-height: 1.1; margin-bottom: .75rem; }
+    .card-desc { font-size: .83rem; color: var(--stone-dim); line-height: 1.6; opacity: 0; transform: translateY(8px); transition: opacity .4s, transform .4s; }
+    .mountain-card:hover .card-desc { opacity: 1; transform: none; }
+
+    #routes { padding: 8rem 0; background: var(--bg); }
+    .routes-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 4rem; }
+    .route-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .route-card { background: var(--surface); border: 1px solid rgba(107,124,90,.12); padding: 2rem; transition: border-color .3s, background .3s; position: relative; overflow: hidden; }
+    .route-card:hover { border-color: rgba(194,88,48,.4); background: var(--surface-2); }
+    .route-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--terracotta); transition: height .4s; }
+    .route-card:hover::before { height: 100%; }
+    .route-difficulty { display: inline-block; font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; padding: .25rem .75rem; margin-bottom: 1rem; }
+    .diff-easy { background: rgba(107,124,90,.2); color: var(--sage-light); }
+    .diff-moderate { background: rgba(205,176,106,.15); color: var(--gold); }
+    .diff-hard { background: rgba(194,88,48,.15); color: var(--terracotta); }
+    .diff-vhard { background: rgba(194,88,48,.25); color: #e06a3a; }
+    .route-name { font-family: 'EB Garamond', serif; font-size: 1.4rem; font-weight: 400; color: var(--white); margin-bottom: .5rem; line-height: 1.2; }
+    .route-meta { display: flex; gap: 1.2rem; margin: .85rem 0; flex-wrap: wrap; }
+    .route-meta span { font-size: .68rem; letter-spacing: .08em; color: var(--stone-dim); display: flex; align-items: center; gap: .35rem; }
+    .route-desc { font-size: .86rem; font-weight: 400; color: var(--stone-dim); line-height: 1.7; }
+    .route-season { margin-top: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--sage-light); }
+
+    #map-section { padding: 8rem 0; background: var(--surface); }
+    .map-wrap { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-top: 3rem; }
+    #the-map { height: 480px; border: 1px solid rgba(107,124,90,.2); position: relative; z-index: 1; }
+    .map-legend { display: flex; flex-direction: column; gap: 1.5rem; }
+    .map-legend-item { padding: 1.5rem; background: var(--surface-2); border-left: 3px solid var(--terracotta); cursor: pointer; transition: background .3s, transform .3s, box-shadow .3s; position: relative; }
+    .map-legend-item:hover { background: #1e2a1e; transform: translateX(4px); }
+    .map-legend-item.active { background: rgba(194,88,48,.13); transform: translateX(8px); box-shadow: 0 0 0 1px rgba(194,88,48,.55), 0 12px 30px rgba(194,88,48,.18); }
+    .map-legend-item.active h4 { color: var(--terracotta); }
+    .map-legend-item.active p { color: var(--stone); }
+    .map-legend-item.active::after { content: 'Viewing'; position: absolute; top: 1rem; right: 1rem; font-size: .55rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--white); background: var(--terracotta); padding: .24rem .6rem; border-radius: 2px; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
+    .map-legend-item h4 { font-family: 'EB Garamond', serif; font-size: 1.2rem; color: var(--white); margin-bottom: .35rem; }
+    .map-legend-item p { font-size: .83rem; color: var(--stone-dim); line-height: 1.6; }
+
+    #experiences { padding: 8rem 0; background: var(--bg); }
+    .exp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin-top: 4rem; }
+    .exp-item { padding: 3rem; background: var(--surface-2); position: relative; overflow: hidden; transition: background .4s; }
+    .exp-item:hover { background: #1e2a1e; }
+    .exp-item::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--terracotta); transition: height .4s; }
+    .exp-item:hover::before { height: 100%; }
+    .exp-num { font-family: 'EB Garamond', serif; font-size: 4rem; font-weight: 300; color: rgba(107,124,90,.12); line-height: 1; margin-bottom: 1rem; transition: color .4s; font-variant-numeric: lining-nums tabular-nums; font-feature-settings: "lnum" 1, "tnum" 1; }
+    .exp-item:hover .exp-num { color: rgba(194,88,48,.15); }
+    .exp-title { font-family: 'EB Garamond', serif; font-weight: 500; font-size: 1.6rem; color: var(--white); margin-bottom: 1rem; line-height: 1.2; }
+    .exp-body { font-size: .95rem; font-weight: 400; color: var(--stone-dim); line-height: 1.75; }
+    .exp-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+    .exp-tag { font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; color: var(--sage-light); padding: .25rem .75rem; border: 1px solid rgba(107,124,90,.3); }
+
+    #season { padding: 8rem 0; background: var(--surface); }
+    .season-grid { margin-top: 3rem; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .season-table { width: 100%; border-collapse: collapse; min-width: 680px; }
+    .season-table th { font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--stone-dim); padding: .75rem .4rem; border-bottom: 1px solid rgba(107,124,90,.2); text-align: center; }
+    .season-table th:first-child { text-align: left; }
+    .season-table td { padding: .7rem .4rem; font-size: .78rem; color: var(--stone-dim); border-bottom: 1px solid rgba(107,124,90,.08); text-align: center; vertical-align: middle; }
+    .season-table td:first-child { font-family: 'EB Garamond', serif; font-size: .95rem; color: var(--white); padding-right: 1rem; white-space: nowrap; text-align: left; }
+    .dot { vertical-align: middle; }
+    .dot { display: inline-block; width: 26px; height: 26px; border-radius: 50%; }
+    .dot-best { background: var(--sage); }
+    .dot-good { background: rgba(107,124,90,.4); }
+    .dot-caution { background: rgba(194,88,48,.3); }
+    .dot-closed { background: rgba(255,255,255,.04); border: 1px solid rgba(184,169,138,.5); }
+    .season-legend { display: flex; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .season-legend span { font-size: .72rem; color: var(--stone-dim); display: flex; align-items: center; gap: .5rem; }
+
+    #finder { padding: 8rem 0; background: var(--bg); }
+    .finder-inner { max-width: 640px; margin: 3rem auto 0; }
+    .quiz-step { display: none; }
+    .quiz-step.active { display: block; }
+    .quiz-q { font-family: 'EB Garamond', serif; font-size: 1.8rem; color: var(--white); margin-bottom: 2rem; line-height: 1.3; }
+    .quiz-options { display: flex; flex-direction: column; gap: 1rem; }
+    .quiz-opt { padding: 1.25rem 1.75rem; background: var(--surface); border: 1px solid rgba(107,124,90,.2); color: var(--stone); font-size: .88rem; cursor: pointer; text-align: left; transition: border-color .3s, background .3s; font-family: 'Commissioner', sans-serif; min-height: 44px; }
+    .quiz-opt:hover { border-color: var(--terracotta); background: var(--surface-2); color: var(--white); }
+    .quiz-result { background: var(--surface-2); padding: 2.5rem; border-left: 3px solid var(--terracotta); display: none; }
+    .quiz-result.show { display: block; }
+    .quiz-result h3 { font-family: 'EB Garamond', serif; font-size: 2rem; color: var(--white); margin-bottom: 1rem; }
+    .quiz-result p { color: var(--stone-dim); line-height: 1.75; margin-bottom: 1rem; font-size: .88rem; }
+    .quiz-restart { margin-top: 1.5rem; background: none; border: 1px solid var(--terracotta); color: var(--terracotta); padding: .75rem 1.75rem; cursor: pointer; font-family: 'Commissioner', sans-serif; font-size: .75rem; letter-spacing: .15em; text-transform: uppercase; transition: background .3s, color .3s; min-height: 44px; }
+    .quiz-restart:hover { background: var(--terracotta); color: var(--white); }
+    .quiz-progress { display: flex; gap: .5rem; margin-bottom: 2rem; }
+    .quiz-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(107,124,90,.3); transition: background .3s; }
+    .quiz-dot.done { background: var(--terracotta); }
+
+    #florafauna { padding: 8rem 0; background: var(--surface); }
+    .flora-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .flora-card { position: relative; overflow: hidden; aspect-ratio: 3/4; }
+    .flora-photo { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform .6s; }
+    .flora-card:hover .flora-photo { transform: scale(1.06); }
+    .flora-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(11,16,13,.95) 0%, rgba(11,16,13,.1) 60%); }
+    .flora-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; }
+    .flora-type { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--terracotta); margin-bottom: .4rem; }
+    .flora-name { font-family: 'EB Garamond', serif; font-size: 1.3rem; line-height: 1.15; color: var(--white); margin-bottom: .35rem; }
+    .flora-latin { font-size: .7rem; font-style: italic; color: var(--stone-dim); margin-bottom: .5rem; }
+    .flora-desc { font-size: .82rem; color: var(--stone-dim); line-height: 1.55; }
+
+    #gallery { padding: 8rem 0; background: var(--bg); }
+    .gallery-top { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: center; margin-bottom: 4rem; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 240px); gap: 3px; }
+    .gallery-cell { position: relative; overflow: hidden; }
+    .gallery-cell:first-child { grid-column: span 2; grid-row: span 2; }
+    .gallery-photo { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform .6s; }
+    .gallery-cell:hover .gallery-photo { transform: scale(1.06); }
+    .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(11,16,13,.6) 0%, transparent 60%); }
+    .gallery-lbl { position: absolute; bottom: 1rem; left: 1rem; font-size: .67rem; letter-spacing: .12em; color: var(--stone-dim); text-transform: uppercase; }
+
+    #testimonials { padding: 8rem 0; background: var(--surface); }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .testi-card { background: var(--surface-2); padding: 2rem; border-top: 2px solid transparent; transition: border-color .3s; }
+    .testi-card:hover { border-color: var(--terracotta); }
+    .testi-stars { color: var(--terracotta); font-size: .9rem; margin-bottom: 1rem; letter-spacing: .15em; }
+    .testi-text { font-family: 'EB Garamond', serif; font-size: 1.32rem; font-style: italic; color: var(--stone); line-height: 1.65; margin-bottom: 1.5rem; }
+    .testi-author { font-size: .82rem; letter-spacing: .1em; color: var(--stone-dim); }
+    .testi-route { font-size: .63rem; color: var(--terracotta); letter-spacing: .15em; text-transform: uppercase; margin-top: .25rem; }
+
+    #faq { padding: 8rem 0; background: var(--bg); }
+    .faq-inner { max-width: 800px; margin: 3rem auto 0; }
+    .faq-item { border-bottom: 1px solid rgba(107,124,90,.2); }
+    .faq-q { width: 100%; background: none; border: none; color: var(--white); font-family: 'EB Garamond', serif; font-size: 1.25rem; padding: 1.5rem 0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 44px; }
+    .faq-q:hover { color: var(--stone-dim); }
+    .faq-icon { width: 20px; height: 20px; flex-shrink: 0; color: var(--terracotta); transition: transform .3s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { font-size: .95rem; font-weight: 400; color: var(--stone-dim); line-height: 1.8; max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .4s; }
+    .faq-item.open .faq-a { max-height: 500px; padding-bottom: 1.5rem; }
+
+    #contact { padding: 8rem 0; background: var(--surface); }
+    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+    .contact-body { color: var(--stone-dim); font-size: .95rem; font-weight: 400; line-height: 1.8; margin-bottom: 3rem; }
+    .social-cards { display: flex; flex-direction: column; gap: 1rem; }
+    .social-card { display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem 2rem; background: var(--surface-2); text-decoration: none; border: 1px solid transparent; transition: border-color .3s, background .3s; position: relative; min-height: 72px; }
+    .social-card::after { content: '->'; position: absolute; right: 2rem; color: var(--stone-dim); transition: transform .3s, color .3s; font-size: .8rem; }
+    .social-card.instagram:hover { border-color: #e1306c; background: rgba(225,48,108,.07); }
+    .social-card.facebook:hover { border-color: #1877f2; background: rgba(24,119,242,.07); }
+    .social-card.viber:hover { border-color: #7360f2; background: rgba(115,96,242,.07); }
+    .social-card:hover::after { transform: translateX(4px); color: var(--white); }
+    .social-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .social-icon.ig { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+    .social-icon.fb { background: #1877f2; }
+    .social-icon.vb { background: #7360f2; }
+    .social-info .platform { font-weight: 500; font-size: .95rem; color: var(--white); }
+    .social-info .handle { font-size: .75rem; color: var(--stone-dim); }
+    .contact-quote-block { position: relative; overflow: hidden; }
+    .contact-photo { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
+    .contact-overlay { position: absolute; inset: 0; background: rgba(11,16,13,.45); display: flex; align-items: flex-end; padding: 3rem; }
+    .contact-quote { font-family: 'EB Garamond', serif; font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 300; font-style: italic; color: var(--white); line-height: 1.4; }
+    .contact-quote em { color: var(--terracotta); font-style: normal; }
+
+    footer { background: var(--bg); border-top: 1px solid rgba(107,124,90,.15); padding: 3rem 5vw; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+    .footer-brand { display: flex; align-items: center; gap: .6rem; font-family: 'EB Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--white); letter-spacing: .05em; }
+    .footer-brand img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; }
+    .footer-brand span { color: var(--terracotta); }
+    .footer-center { font-size: .9rem; letter-spacing: .1em; color: var(--stone-dim); text-align: center; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { color: var(--stone-dim); transition: color .3s; min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
+    .footer-links a:hover { color: var(--terracotta); }
+
+    /* Mobile menu logo */
+    .mm-logo { width: 76px; height: 76px; border-radius: 50%; object-fit: cover; margin-bottom: .5rem; box-shadow: 0 4px 18px rgba(0,0,0,.5); }
+
+    /* Active-section nav highlight with animated drawn underline */
+    .nav-links a { position: relative; }
+    .nav-links a::after { content: ''; display: block; height: 1px; margin-top: 4px; background: var(--terracotta); transform: scaleX(0); transform-origin: right; transition: transform .5s cubic-bezier(.65,0,.35,1); }
+    .nav-links a.active { color: var(--terracotta); }
+    .nav-links a.active::after { transform: scaleX(1); transform-origin: left; }
+    nav:not(.scrolled) .nav-links a.active { color: var(--accent-bright); }
+    nav:not(.scrolled) .nav-links a::after { background: var(--accent-bright); }
+    .mobile-bottom-bar a.active { color: var(--terracotta); }
+    @media (prefers-reduced-motion: reduce) { .nav-links a::after { transition: none; } }
+
+    /* Stronger gradient so mountain-card labels stay readable */
+    .card-overlay { background: linear-gradient(to top, rgba(11,16,13,.96) 0%, rgba(11,16,13,.55) 38%, transparent 65%); }
+    .card-alt { text-shadow: 0 1px 8px rgba(0,0,0,.8); }
+
+    /* Gallery + mountain photos are clickable */
+    .gallery-cell, .mountain-card { cursor: zoom-in; }
+
+    /* Lightbox */
+    .lightbox { position: fixed; inset: 0; z-index: 300; background: rgba(7,10,8,.94); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+    .lightbox.open { opacity: 1; pointer-events: auto; }
+    .lightbox img { max-width: 90vw; max-height: 82vh; object-fit: contain; box-shadow: 0 20px 60px rgba(0,0,0,.6); border: 1px solid rgba(240,236,226,.1); transform: scale(.96); transition: transform .3s ease; }
+    .lightbox.open img { transform: scale(1); }
+    .lightbox-cap { position: absolute; bottom: 6vh; left: 0; right: 0; text-align: center; color: var(--stone); font-size: .8rem; letter-spacing: .15em; text-transform: uppercase; }
+    .lb-btn { position: absolute; background: rgba(11,16,13,.5); border: 1px solid rgba(240,236,226,.2); color: var(--white); width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .3s, border-color .3s; }
+    .lb-btn:hover { background: var(--terracotta); border-color: var(--terracotta); }
+    .lb-close { top: 4vh; right: 5vw; }
+    .lb-prev { left: 3vw; top: 50%; transform: translateY(-50%); }
+    .lb-next { right: 3vw; top: 50%; transform: translateY(-50%); }
+    @media (max-width: 600px) { .lb-prev { left: 1rem; } .lb-next { right: 1rem; } .lb-btn { width: 44px; height: 44px; } }
+
+    /* Lighter "breather" section: Testimonials on warm limestone */
+    #testimonials { background: linear-gradient(170deg, #e8dfca 0%, #ddd2b8 100%); }
+    #testimonials .section-label { color: #b14a22; }
+    #testimonials .section-label::before { background: #b14a22; }
+    #testimonials .section-title { color: #20271c; }
+    #testimonials .section-title em { color: #6b7c5a; }
+    #testimonials .testi-card { background: #fbf7ec; border-top-color: transparent; box-shadow: 0 8px 24px rgba(60,50,30,.12); }
+    #testimonials .testi-card:hover { border-top-color: var(--terracotta); }
+    #testimonials .testi-stars { color: #c25830; }
+    #testimonials .testi-text { color: #2c3326; }
+    #testimonials .testi-author { color: #5a5440; }
+    #testimonials .testi-route { color: #b14a22; }
+
+    @media (max-width: 1100px) {
+      .route-cards { grid-template-columns: repeat(2, 1fr); }
+      .flora-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .nav-links, .nav-social { display: none; }
+      .hamburger { display: flex; }
+      .mobile-bottom-bar { display: flex; }
+      body { padding-bottom: 60px; }
+      #about, #weather, #mountains, #routes, #map-section, #experiences, #season, #finder, #florafauna, #gallery, #testimonials, #faq, #contact { padding: 5rem 0; }
+      .about-grid, .routes-intro, .contact-inner, .map-wrap, .gallery-top { grid-template-columns: 1fr; gap: 3rem; }
+      .about-accent { right: 1rem; bottom: -1.5rem; width: 130px; height: 130px; }
+      .about-accent .num { font-size: 2.2rem; }
+      .mountain-cards { grid-template-columns: 1fr; }
+      .mountain-card { aspect-ratio: 16/9; }
+      .route-cards { grid-template-columns: 1fr; }
+      .exp-grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .flora-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 180px); }
+      .gallery-cell:first-child { grid-column: span 2; grid-row: span 1; }
+      .stat-row { gap: 1.5rem; }
+      .mountains-header { flex-direction: column; align-items: flex-start; }
+      .map-wrap { grid-template-columns: 1fr; }
+      #the-map { height: 320px; }
+    }
+    @media (max-width: 540px) {
+      .weather-grid { grid-template-columns: 1fr; }
+      .flora-grid { grid-template-columns: 1fr 1fr; }
+      .section-title { font-size: clamp(1.9rem, 8vw, 2.8rem); }
+      .exp-item { padding: 2rem; }
+      .route-card { padding: 1.5rem; }
+      .faq-q { font-size: 1.05rem; }
+      .season-legend { display: grid; grid-template-columns: 1fr 1fr; gap: .85rem 1rem; }
+    }
+    /* ===== SUNNY LIGHT THEME OVERRIDES ===== */
+    /* Nav: light text over the hero photo; light bar with dark text when scrolled */
+    .nav-logo, .nav-links a, .lang-switch a, .nav-social a { color: #fdf8ee; }
+    .nav-logo .hl { color: #f0863f; }
+    nav.scrolled { background: rgba(255,253,247,.95); border-bottom: 1px solid rgba(120,90,50,.18); }
+    nav.scrolled .nav-logo, nav.scrolled .nav-links a, nav.scrolled .lang-switch a, nav.scrolled .nav-social a { color: var(--stone); text-shadow: none; }
+    nav.scrolled .nav-logo .hl, nav.scrolled .nav-links a:hover, nav.scrolled .lang-switch a.active, nav.scrolled .nav-social a:hover { color: var(--terracotta); }
+    nav.scrolled .nav-links a.active { color: var(--terracotta); }
+    nav.scrolled .nav-links a::after { background: var(--terracotta); }
+
+    /* Text that sits over photos stays light */
+    .hero-title, .hero-sub { color: #fdf8ee; }
+    .hero-eyebrow, .hero-cta { color: #f0863f; }
+    .card-name, .card-desc { color: #fdf8ee; }
+    .flora-name, .flora-latin, .flora-desc { color: #f3ecdd; }
+    .gallery-lbl { color: #f3ecdd; }
+    .contact-quote { color: #fdf8ee; }
+    .about-accent .num { color: #fff; }
+    .about-accent .lbl { color: rgba(255,255,255,.82); }
+
+    /* Light hover states (were dark green) */
+    .exp-item:hover { background: #f4ead6; }
+    .map-legend-item:hover { background: #f4ead6; }
+
+    /* Mobile menu + bottom bar: light */
+    .mobile-menu { background: rgba(250,244,232,.98); }
+    .mobile-menu a { color: var(--stone); }
+    .mm-social a, .mm-lang a { color: var(--stone-dim); }
+    .mobile-bottom-bar { background: rgba(255,253,247,.97); border-top: 1px solid rgba(120,90,50,.18); }
+    .mobile-bottom-bar a { color: var(--stone-dim); }
+
+    /* Breather section -> soft Aegean band (sun + sea feel) */
+    #testimonials { background: linear-gradient(170deg, #dfeaea 0%, #c9dadd 100%); }
+    #testimonials .section-label { color: #b14a22; }
+    #testimonials .section-label::before { background: #b14a22; }
+    #testimonials .section-title { color: #25342f; }
+    #testimonials .section-title em { color: #5d6e47; }
+    #testimonials .testi-card { background: #fffef8; box-shadow: 0 10px 26px rgba(40,60,60,.12); }
+    #testimonials .testi-stars { color: var(--terracotta); }
+    #testimonials .testi-text { color: #2c332a; }
+    #testimonials .testi-author { color: #5a6452; }
+    #testimonials .testi-route { color: #b14a22; }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a class="nav-logo" href="#"><img src="/logo.png" alt="The Wild Goat logo"/>The <span>Wild</span> Goat</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#mountains">Mountains</a></li>
+    <li><a href="#routes">Routes</a></li>
+    <li><a href="#experiences">Experiences</a></li>
+    <li><a href="#season">Seasons</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-social">
+      <a href="https://www.instagram.com/thewildgoat" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="https://www.facebook.com/TheWildGoat.Crete?rdid=8L1ENOHo2fyFDusF&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1HvMtZCc6X%2F#" target="_blank" rel="noopener" aria-label="Facebook"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+      <a href="https://invite.viber.com/?g=Zgk1kKnsq1OYTFGAbiJ0YWm5jY1b_wZ6&lang=en" aria-label="Viber"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.5 3.5C18.25 1.5 14.5.5 12 .5S5.75 1.5 3.5 3.5C1.5 5.25.5 8 .5 12c0 2.75.75 5 2 6.75V21a1 1 0 001.6.8l2.9-2.1c1.6.5 3.3.8 5 .8 2.5 0 6.25-1 8.5-3C22.5 15.25 23.5 12.5 23.5 12c0-2.5-1-6.25-3-8.5zM16 15.75c-.5.5-1.25.75-2 .75s-1.5-.25-2-.75c-1.5-1.5-2.5-3-3-4.5-.25-.75 0-1.5.5-2l.75-.75c.25-.25.5-.25.75 0l1.25 1.25c.25.25.25.5 0 .75L11.5 11c.5 1.25 1.25 2 2.5 2.5l.75-.75c.25-.25.5-.25.75 0l1.25 1.25c.25.25.25.5 0 .75z"/></svg></a>
+    </div>
+    <div class="lang-switch"><a href="/">EL</a><span class="sep">/</span><a href="/en/" class="active">EN</a></div>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <img class="mm-logo" src="/logo.png" alt="The Wild Goat logo"/>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#mountains" onclick="closeMobile()">Mountains</a>
+  <a href="#routes" onclick="closeMobile()">Routes</a>
+  <a href="#experiences" onclick="closeMobile()">Experiences</a>
+  <a href="#season" onclick="closeMobile()">Seasons</a>
+  <a href="#gallery" onclick="closeMobile()">Gallery</a>
+  <a href="#faq" onclick="closeMobile()">FAQ</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <div class="mm-social">
+    <a href="https://www.instagram.com/thewildgoat" target="_blank" rel="noopener" aria-label="Instagram"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+    <a href="https://www.facebook.com/TheWildGoat.Crete?rdid=8L1ENOHo2fyFDusF&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1HvMtZCc6X%2F#" target="_blank" rel="noopener" aria-label="Facebook"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+    <a href="https://invite.viber.com/?g=Zgk1kKnsq1OYTFGAbiJ0YWm5jY1b_wZ6&lang=en" aria-label="Viber"><svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M20.5 3.5C18.25 1.5 14.5.5 12 .5S5.75 1.5 3.5 3.5C1.5 5.25.5 8 .5 12c0 2.75.75 5 2 6.75V21a1 1 0 001.6.8l2.9-2.1c1.6.5 3.3.8 5 .8 2.5 0 6.25-1 8.5-3C22.5 15.25 23.5 12.5 23.5 12c0-2.5-1-6.25-3-8.5z"/></svg></a>
+  </div>
+  <div class="mm-lang"><a href="/">ΕΛ</a><a href="/en/" class="active">EN</a></div>
+</div>
+
+<div class="mobile-bottom-bar">
+  <a href="#routes" aria-label="Routes"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 12h18M3 12l4-4M3 12l4 4"/></svg>Routes</a>
+  <a href="#map-section" aria-label="Map"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 3L3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/></svg>Map</a>
+  <a href="https://www.instagram.com/thewildgoat" target="_blank" rel="noopener" aria-label="Instagram"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a>
+  <a href="https://invite.viber.com/?g=Zgk1kKnsq1OYTFGAbiJ0YWm5jY1b_wZ6&lang=en" aria-label="Viber"><svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M20.5 3.5C18.25 1.5 14.5.5 12 .5S5.75 1.5 3.5 3.5C1.5 5.25.5 8 .5 12c0 2.75.75 5 2 6.75V21a1 1 0 001.6.8l2.9-2.1c1.6.5 3.3.8 5 .8 2.5 0 6.25-1 8.5-3C22.5 15.25 23.5 12.5 23.5 12c0-2.5-1-6.25-3-8.5z"/></svg>Viber</a>
+  <a href="#contact" aria-label="Contact"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-photo" id="heroPhoto"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Crete, Greece - Altitude 2456m</p>
+    <h1 class="hero-title">The<br/><em>Wild</em><br/>Goat</h1>
+    <p class="hero-sub">Where the limestone peaks of Crete meet the sky. Guided mountain experiences in the White Mountains, Psiloritis, and beyond.</p>
+    <a class="hero-cta" href="#about">Discover the mountains <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+  <div class="scroll-hint" aria-hidden="true"><div class="scroll-line"></div><span>Scroll</span></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <img class="about-img" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=85&fit=crop&auto=format" alt="Rocky mountain peaks of Crete" loading="lazy"/>
+        <div class="about-accent"><span class="num">2456</span><span class="lbl">metres</span><span class="lbl" style="font-size:.55rem;opacity:.6">Psiloritis</span></div>
+      </div>
+      <div class="reveal" style="transition-delay:.15s">
+        <p class="section-label">About Us</p>
+        <h2 class="section-title">Born from<br/><em>the stone</em></h2>
+        <p class="about-body">The Wild Goat is your guide into the raw, ancient highlands of Crete. Like the agile kri-kri, the wild Cretan goat that navigates sheer limestone cliffs with impossible grace, we move through these mountains with knowledge, confidence, and deep respect.</p>
+        <p class="about-body">We are mountain people. We know the White Mountains, the sacred summit of Psiloritis, and the sweeping ridgelines of Dikti as intimately as the paths between our own villages. Every route we offer is one we have walked in every season, in every light.</p>
+        <p class="about-body">No booking systems. No forms. Just reach out to us directly on Instagram, Facebook, or Viber, and we will plan your mountain experience together personally.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="num">3</div><div class="lbl">Mountain ranges</div></div>
+          <div class="stat"><div class="num">40+</div><div class="lbl">Curated routes</div></div>
+          <div class="stat"><div class="num">4</div><div class="lbl">Seasons active</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEATHER -->
+<section id="weather">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Live Conditions</p>
+      <h2 class="section-title">Mountain<br/><em>weather now</em></h2>
+    </div>
+    <div class="weather-grid">
+      <div class="weather-card reveal" style="transition-delay:.05s">
+        <div class="weather-peak">Psiloritis - 2456m</div>
+        <div class="weather-temp" id="wt-psilo"><span style="font-size:1rem;color:var(--stone-dim)">Loading...</span></div>
+        <div class="weather-desc" id="wd-psilo"></div>
+        <div class="weather-wind" id="ww-psilo"></div>
+      </div>
+      <div class="weather-card reveal" style="transition-delay:.1s">
+        <div class="weather-peak">Lefka Ori - 2453m</div>
+        <div class="weather-temp" id="wt-lefka"><span style="font-size:1rem;color:var(--stone-dim)">Loading...</span></div>
+        <div class="weather-desc" id="wd-lefka"></div>
+        <div class="weather-wind" id="ww-lefka"></div>
+      </div>
+      <div class="weather-card reveal" style="transition-delay:.15s">
+        <div class="weather-peak">Dikti - 2148m</div>
+        <div class="weather-temp" id="wt-dikti"><span style="font-size:1rem;color:var(--stone-dim)">Loading...</span></div>
+        <div class="weather-desc" id="wd-dikti"></div>
+        <div class="weather-wind" id="ww-dikti"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOUNTAINS -->
+<section id="mountains">
+  <div class="container">
+    <div class="mountains-header reveal">
+      <div>
+        <p class="section-label">The Ranges</p>
+        <h2 class="section-title">Three peaks,<br/><em>one island</em></h2>
+      </div>
+      <p style="max-width:340px;font-size:.85rem;color:var(--stone-dim);line-height:1.75">Crete conceals mountain worlds that most visitors never imagine exist. We will take you there.</p>
+    </div>
+    <div class="mountain-cards">
+      <div class="mountain-card reveal">
+        <div class="card-photo" style="background-image:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80&fit=crop&auto=format')"></div>
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <p class="card-alt">2453m - Pachnes</p>
+          <h3 class="card-name">Lefka Ori<br/>White Mountains</h3>
+          <p class="card-desc">A vast limestone plateau of extraordinary wildness. Ravines, gorges, and the legendary Samaria Gorge carving 16km to the Libyan Sea.</p>
+        </div>
+      </div>
+      <div class="mountain-card reveal" style="transition-delay:.1s">
+        <div class="card-photo" style="background-image:url('https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=800&q=80&fit=crop&auto=format')"></div>
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <p class="card-alt">2456m - Timios Stavros</p>
+          <h3 class="card-name">Psiloritis<br/>Mount Ida</h3>
+          <p class="card-desc">The mythical birthplace of Zeus. Crete's highest peak, crowned with a small chapel, offering panoramic views from sea to sea on clear days.</p>
+        </div>
+      </div>
+      <div class="mountain-card reveal" style="transition-delay:.2s">
+        <div class="card-photo" style="background-image:url('https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=800&q=80&fit=crop&auto=format')"></div>
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <p class="card-alt">2148m - Spathi</p>
+          <h3 class="card-name">Dikti Ori<br/>Lasithi Range</h3>
+          <p class="card-desc">The green giant of eastern Crete, home to the Diktaion Andron, the sacred cave where legend says the infant Zeus was hidden from his father.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROUTES -->
+<section id="routes">
+  <div class="container">
+    <div class="routes-intro">
+      <div class="reveal">
+        <p class="section-label">Our Routes</p>
+        <h2 class="section-title">Trails we<br/><em>know by heart</em></h2>
+      </div>
+      <p class="reveal" style="color:var(--stone-dim);font-size:.9rem;line-height:1.85;transition-delay:.1s">Every route below is one we walk regularly, in every season. We know where the water sources are, where the shade falls, which sections demand your full attention. These are not itineraries pulled from a guidebook.</p>
+    </div>
+    <div class="route-cards">
+      <div class="route-card reveal">
+        <span class="route-difficulty diff-hard">Hard</span>
+        <div class="route-name">Psiloritis Summit via Nida Plateau</div>
+        <div class="route-meta">
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>18 km</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>8 hours</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>+1456m</span>
+        </div>
+        <p class="route-desc">Starting from the Nida Plateau at 1400m, this ascent winds through open limestone to the summit at 2456m. The terrain is rocky and exposed in the final stretch. Views extend to both coasts simultaneously on clear days.</p>
+        <div class="route-season">Best season: April - October</div>
+      </div>
+      <div class="route-card reveal" style="transition-delay:.07s">
+        <span class="route-difficulty diff-moderate">Moderate</span>
+        <div class="route-name">Samaria Gorge Full Traverse</div>
+        <div class="route-meta">
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>16 km</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>6 hours</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>-1200m</span>
+        </div>
+        <p class="route-desc">Europe's longest gorge. The path descends from Omalos through soaring 600m walls, ancient Samaria village ruins, and the famous Iron Gates narrows before reaching the coast at Agia Roumeli. Ends with a boat to Hora Sfakion.</p>
+        <div class="route-season">Best season: May - October</div>
+      </div>
+      <div class="route-card reveal" style="transition-delay:.14s">
+        <span class="route-difficulty diff-easy">Easy</span>
+        <div class="route-name">Imbros Gorge</div>
+        <div class="route-meta">
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>8 km</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2.5 hours</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>-400m</span>
+        </div>
+        <p class="route-desc">A quieter alternative to Samaria. Narrow passages squeeze between pale limestone walls draped in wild herbs. Less crowded, shorter, and accessible year-round. Perfect first gorge or a half-day addition to any stay in Sfakia.</p>
+        <div class="route-season">Best season: Year-round</div>
+      </div>
+      <div class="route-card reveal" style="transition-delay:.04s">
+        <span class="route-difficulty diff-vhard">Very Hard</span>
+        <div class="route-name">Pachnes - Lefka Ori Traverse</div>
+        <div class="route-meta">
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>22 km</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>10 hours</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>+1700m</span>
+        </div>
+        <p class="route-desc">The full White Mountains ridge experience. From Kallergi shelter across the high plateau to Pachnes at 2453m. Exposed, remote, and utterly magnificent. Requires solid fitness and an early start. Overnight at the shelter is recommended.</p>
+        <div class="route-season">Best season: June - September</div>
+      </div>
+      <div class="route-card reveal" style="transition-delay:.11s">
+        <span class="route-difficulty diff-easy">Easy</span>
+        <div class="route-name">Agia Irini Gorge</div>
+        <div class="route-meta">
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>9 km</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>3 hours</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>-450m</span>
+        </div>
+        <p class="route-desc">Shaded, cool, and alive with birdsong. Agia Irini is a hidden gem on the western edge of the White Mountains. Dense plane trees and oleander line the path to the village of Sougia on the south coast.</p>
+        <div class="route-season">Best season: April - November</div>
+      </div>
+      <div class="route-card reveal" style="transition-delay:.18s">
+        <span class="route-difficulty diff-hard">Hard</span>
+        <div class="route-name">Dikti - Spathi Peak Circuit</div>
+        <div class="route-meta">
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>14 km</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>7 hours</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>+1100m</span>
+        </div>
+        <p class="route-desc">A circular route above the Lasithi Plateau to the summit of Spathi at 2148m. Greener and more forested than western Crete. The descent passes the Diktaion Cave, legendary birthplace of Zeus, before looping through flowering meadows.</p>
+        <div class="route-season">Best season: May - October</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section id="map-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">The Terrain</p>
+      <h2 class="section-title">Find your<br/><em>mountain</em></h2>
+    </div>
+    <div class="map-wrap">
+      <div class="map-legend reveal" style="transition-delay:.1s">
+        <div class="map-legend-item" onclick="flyToPeak('lefka', this)"><h4>Lefka Ori</h4><p>Western Crete. Wildest and most remote. The Samaria and Imbros gorges cut through its flanks. Accessed from Chania or Hora Sfakion.</p></div>
+        <div class="map-legend-item" onclick="flyToPeak('psilo', this)"><h4>Psiloritis</h4><p>Central Crete. Crete's highest mountain. Reached via the Nida Plateau from Rethymno. The sacred heart of the island.</p></div>
+        <div class="map-legend-item" onclick="flyToPeak('dikti', this)"><h4>Dikti</h4><p>Eastern Crete. Above the Lasithi Plateau. Accessible from Heraklion or Agios Nikolaos. Greener, more forested terrain.</p></div>
+      </div>
+      <div class="reveal" style="transition-delay:.05s"><div id="the-map"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCES -->
+<section id="experiences">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">What We Offer</p>
+      <h2 class="section-title">Mountain<br/><em>experiences</em></h2>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-item reveal"><div class="exp-num">01</div><h3 class="exp-title">Summit Expeditions</h3><p class="exp-body">Full-day ascents to the highest points of Crete. We plan every detail, weather, timing, route variation, so you can focus entirely on the experience of being above the clouds.</p><div class="exp-tags"><span class="exp-tag">Full day</span><span class="exp-tag">All seasons</span><span class="exp-tag">Guided</span></div></div>
+      <div class="exp-item reveal" style="transition-delay:.1s"><div class="exp-num">02</div><h3 class="exp-title">Gorge Traversals</h3><p class="exp-body">Walk the ancient river-carved corridors of Crete. Samaria, Imbros, Agia Irini, Aradena. Each gorge is a world of its own, with soaring walls, rare flora, and Minoan echoes.</p><div class="exp-tags"><span class="exp-tag">Half or full day</span><span class="exp-tag">Spring and Autumn</span><span class="exp-tag">Moderate</span></div></div>
+      <div class="exp-item reveal" style="transition-delay:.05s"><div class="exp-num">03</div><h3 class="exp-title">Sunrise and Night Hikes</h3><p class="exp-body">Watch Crete wake from altitude. Pre-dawn departures to high ridges, where the light breaks over the Aegean and the air is cool, clear, and entirely yours. Stars on the way up, gold on the way down.</p><div class="exp-tags"><span class="exp-tag">Dawn start</span><span class="exp-tag">Summer</span><span class="exp-tag">Spectacular</span></div></div>
+      <div class="exp-item reveal" style="transition-delay:.15s"><div class="exp-num">04</div><h3 class="exp-title">Multi-Day Traverses</h3><p class="exp-body">Immersive multi-day routes through the highland plateaus. Sleep in mountain shelters, cook over fire, move slowly through terrain most people only see from below. The full experience.</p><div class="exp-tags"><span class="exp-tag">2-5 days</span><span class="exp-tag">Spring-Autumn</span><span class="exp-tag">Small groups</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SEASON GUIDE -->
+<section id="season">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Best Time to Go</p>
+      <h2 class="section-title">Season<br/><em>guide</em></h2>
+      <p style="margin-top:1rem;color:var(--stone-dim);font-size:.88rem;max-width:540px">Crete's mountain seasons are distinct. Here is what to expect month by month for each range and experience type.</p>
+    </div>
+    <div class="season-grid reveal" style="transition-delay:.1s">
+      <table class="season-table">
+        <thead><tr><th style="text-align:left">Route / Range</th><th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th><th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th></tr></thead>
+        <tbody>
+          <tr><td>Psiloritis Summit</td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-caution"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-caution"></div></td><td><div class="dot dot-closed"></div></td></tr>
+          <tr><td>Lefka Ori / Pachnes</td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-caution"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-closed"></div></td></tr>
+          <tr><td>Samaria Gorge</td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-closed"></div></td></tr>
+          <tr><td>Imbros Gorge</td><td><div class="dot dot-good"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td></tr>
+          <tr><td>Dikti Range</td><td><div class="dot dot-caution"></div></td><td><div class="dot dot-caution"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-caution"></div></td></tr>
+          <tr><td>Sunrise Hikes</td><td><div class="dot dot-caution"></div></td><td><div class="dot dot-caution"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-caution"></div></td></tr>
+        </tbody>
+      </table>
+      <div class="season-legend">
+        <span><div class="dot dot-best" style="width:16px;height:16px"></div> Best conditions</span>
+        <span><div class="dot dot-good" style="width:16px;height:16px"></div> Good to go</span>
+        <span><div class="dot dot-caution" style="width:16px;height:16px"></div> Weather variable</span>
+        <span><div class="dot dot-closed" style="width:16px;height:16px"></div> Not advised</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFICULTY FINDER -->
+<section id="finder">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <p class="section-label" style="justify-content:center">Find Your Route</p>
+      <h2 class="section-title">Which trail<br/><em>is right for you?</em></h2>
+      <p style="color:var(--stone-dim);font-size:.88rem;margin-top:1rem">Answer three questions and we will point you toward the right experience.</p>
+    </div>
+    <div class="finder-inner reveal" style="transition-delay:.1s">
+      <div class="quiz-progress"><div class="quiz-dot" id="qd1"></div><div class="quiz-dot" id="qd2"></div><div class="quiz-dot" id="qd3"></div></div>
+      <div class="quiz-step active" id="step1">
+        <div class="quiz-q">How would you describe your fitness level?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="nextStep(1,'casual')">I walk regularly but do not train specifically</button>
+          <button class="quiz-opt" onclick="nextStep(1,'active')">I hike or exercise several times a week</button>
+          <button class="quiz-opt" onclick="nextStep(1,'fit')">I am very fit and comfortable with long hard days</button>
+        </div>
+      </div>
+      <div class="quiz-step" id="step2">
+        <div class="quiz-q">How much time do you have for a single day out?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="nextStep(2,'half')">Half a day, 3 to 4 hours</button>
+          <button class="quiz-opt" onclick="nextStep(2,'full')">A full day, 6 to 8 hours</button>
+          <button class="quiz-opt" onclick="nextStep(2,'multi')">Multiple days, I want the full adventure</button>
+        </div>
+      </div>
+      <div class="quiz-step" id="step3">
+        <div class="quiz-q">What kind of landscape calls to you most?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="showResult('gorge')">Shaded gorges and rivers, cool and dramatic</button>
+          <button class="quiz-opt" onclick="showResult('summit')">Open ridgelines and sweeping panoramic views</button>
+          <button class="quiz-opt" onclick="showResult('remote')">Remote plateaus and true wilderness, few other people</button>
+        </div>
+      </div>
+      <div class="quiz-result" id="quizResult">
+        <h3 id="resultTitle">Your Recommended Route</h3>
+        <p id="resultDesc"></p>
+        <p id="resultExtra"></p>
+        <button class="quiz-restart" onclick="restartQuiz()">Start Again</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLORA AND FAUNA -->
+<section id="florafauna">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Wildlife of the Peaks</p>
+      <h2 class="section-title">Flora and<br/><em>fauna</em></h2>
+    </div>
+    <div class="flora-grid">
+      <div class="flora-card reveal">
+        <div class="flora-photo" style="background-image:url('https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=600&q=80&fit=crop&auto=format')"></div>
+        <div class="flora-overlay"></div>
+        <div class="flora-content"><div class="flora-type">Wildlife</div><div class="flora-name">Kri-Kri</div><div class="flora-latin">Capra aegagrus cretensis</div><div class="flora-desc">The wild Cretan goat. Agile, ancient, and rarely seen. It navigates limestone cliffs that stop most climbers cold. Our namesake and spirit guide.</div></div>
+      </div>
+      <div class="flora-card reveal" style="transition-delay:.07s">
+        <div class="flora-photo" style="background-image:url('https://images.unsplash.com/photo-1490750967868-88df5691cbe9?w=600&q=80&fit=crop&auto=format')"></div>
+        <div class="flora-overlay"></div>
+        <div class="flora-content"><div class="flora-type">Wildflower</div><div class="flora-name">Cretan Ebony</div><div class="flora-latin">Ebenus cretica</div><div class="flora-desc">A burst of vivid pink on bare limestone. Endemic to Crete, it flowers in April and May when the high trails first open. A signal that the season has begun.</div></div>
+      </div>
+      <div class="flora-card reveal" style="transition-delay:.14s">
+        <div class="flora-photo" style="background-image:url('https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&q=80&fit=crop&auto=format')"></div>
+        <div class="flora-overlay"></div>
+        <div class="flora-content"><div class="flora-type">Bird</div><div class="flora-name">Griffon Vulture</div><div class="flora-latin">Gyps fulvus</div><div class="flora-desc">A 2.5 metre wingspan riding thermals above the gorges. Watch for them circling in groups over the Samaria and Imbros cliffs. Prehistoric and effortless.</div></div>
+      </div>
+      <div class="flora-card reveal" style="transition-delay:.21s">
+        <div class="flora-photo" style="background-image:url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&q=80&fit=crop&auto=format')"></div>
+        <div class="flora-overlay"></div>
+        <div class="flora-content"><div class="flora-type">Herb</div><div class="flora-name">Cretan Dittany</div><div class="flora-latin">Origanum dictamnus</div><div class="flora-desc">Found only on the cliffs of Crete. Woolly, aromatic, and prized since antiquity for its medicinal properties. Grows where only the kri-kri can reach.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <div class="gallery-top">
+      <div class="reveal">
+        <p class="section-label">Gallery</p>
+        <h2 class="section-title">The mountains<br/><em>in every light</em></h2>
+      </div>
+      <p class="reveal" style="color:var(--stone-dim);font-size:.9rem;line-height:1.85;transition-delay:.1s">Follow us on Instagram for the latest photographs from the trails. Morning mist over limestone ridges, wildflowers in the highland meadows, sunsets that silence everything. Your own photos will join this collection.</p>
+    </div>
+    <div class="gallery-grid reveal" id="galleryGrid">
+      <div class="gallery-cell" onclick="openLightbox(this)" data-full="https://images.unsplash.com/photo-1551632811-561732d1e306?w=1600&q=85&fit=crop&auto=format" data-cap="Ridge at dawn"><div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1551632811-561732d1e306?w=900&q=80&fit=crop&auto=format')"></div><div class="gallery-overlay"></div><div class="gallery-lbl">Ridge at dawn</div></div>
+      <div class="gallery-cell" onclick="openLightbox(this)" data-full="https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=1600&q=85&fit=crop&auto=format" data-cap="Trail descent"><div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=500&q=80&fit=crop&auto=format')"></div><div class="gallery-overlay"></div><div class="gallery-lbl">Trail descent</div></div>
+      <div class="gallery-cell" onclick="openLightbox(this)" data-full="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1600&q=85&fit=crop&auto=format" data-cap="High plateau"><div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=500&q=80&fit=crop&auto=format')"></div><div class="gallery-overlay"></div><div class="gallery-lbl">High plateau</div></div>
+      <div class="gallery-cell" onclick="openLightbox(this)" data-full="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1600&q=85&fit=crop&auto=format" data-cap="Gorge passage"><div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=500&q=80&fit=crop&auto=format')"></div><div class="gallery-overlay"></div><div class="gallery-lbl">Gorge passage</div></div>
+      <div class="gallery-cell" onclick="openLightbox(this)" data-full="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&q=85&fit=crop&auto=format" data-cap="Summit light"><div class="gallery-photo" style="background-image:url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=500&q=80&fit=crop&auto=format')"></div><div class="gallery-overlay"></div><div class="gallery-lbl">Summit light</div></div>
+    </div>
+    <p style="margin-top:2rem;font-size:.8rem;color:var(--stone-dim);font-style:italic;text-align:center">Follow <a href="https://www.instagram.com/thewildgoat" target="_blank" rel="noopener" style="color:var(--terracotta);text-decoration:none">@thewildgoat.crete</a> on Instagram for live updates from the trails.</p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Voices from the Trail</p>
+      <h2 class="section-title">What hikers<br/><em>say</em></h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal"><div class="testi-stars">* * * * *</div><div class="testi-text">"The Psiloritis summit at sunrise is something I will never forget. Our guide knew every rock, every shortcut, every story. We felt completely safe and completely alive."</div><div class="testi-author">Maria K. - Netherlands</div><div class="testi-route">Psiloritis Summit</div></div>
+      <div class="testi-card reveal" style="transition-delay:.1s"><div class="testi-stars">* * * * *</div><div class="testi-text">"We did the Pachnes traverse over two days and it was the hardest, most beautiful thing I have ever done. The shelter, the silence, the stars. Absolutely otherworldly."</div><div class="testi-author">Thomas B. - Germany</div><div class="testi-route">Lefka Ori Multi-Day</div></div>
+      <div class="testi-card reveal" style="transition-delay:.2s"><div class="testi-stars">* * * * *</div><div class="testi-text">"I am not a serious hiker but the Imbros Gorge was perfect for me. Short, stunning, and our guide made it feel like an adventure even for a beginner. Highly recommended."</div><div class="testi-author">Sophie R. - France</div><div class="testi-route">Imbros Gorge</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Questions</p>
+      <h2 class="section-title">Before you<br/><em>go</em></h2>
+    </div>
+    <div class="faq-inner reveal" style="transition-delay:.1s">
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What should I bring on a mountain hike in Crete?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">At minimum: sturdy hiking boots with ankle support, at least 2 litres of water per person, sun protection (hat, sunscreen, sunglasses), a light windproof layer even in summer, high-energy snacks, and a fully charged phone. For summits above 2000m, an extra insulating layer is recommended even in July. We provide a detailed packing list when you book with us.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Do I need to be a serious hiker?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">Not at all. We have routes for all levels. The gorge walks like Imbros and Agia Irini are suitable for anyone who can walk for 3 hours on uneven ground. The summit routes require better fitness but are not technical climbing. We will always match the route to your group's ability.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How do I book a trip with The Wild Goat?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">No forms, no booking platforms. Message us directly on Instagram, Facebook, or Viber. Tell us your dates, group size, fitness level, and what kind of experience you are looking for. We will respond within a few hours and plan everything together personally. We prefer it this way.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the best time of year to visit?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">For gorges: spring (April to June) is ideal when wildflowers are in bloom and the streams still flow. For summits: June through September, avoiding the heat of midday in July and August by starting early. Autumn (September to October) is one of the best-kept secrets, with stable weather, fewer people, and golden light.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How large are your groups?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">We keep groups small, typically between 2 and 8 people. This is not a tour bus operation. Smaller groups move better, experience more, and the guide can give everyone real attention. We also take solo travellers and couples.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Are the routes safe?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">Yes, when approached correctly. The mountains deserve respect and preparation. We check weather forecasts closely, adjust or cancel if conditions are unsafe, carry first aid kits, and communicate route details before every departure. Our guides have years of experience on these specific trails in all seasons. Safety is not negotiable.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="reveal">
+        <p class="section-label">Find Us</p>
+        <h2 class="section-title">Reach out,<br/><em>connect</em></h2>
+        <p class="contact-body">No online forms. No booking bots. We believe mountain adventures begin with a real conversation. Message us on any of these platforms and we will plan your Cretan mountain experience together.</p>
+        <div class="social-cards">
+          <a class="social-card instagram" href="https://www.instagram.com/thewildgoat" target="_blank" rel="noopener"><div class="social-icon ig"><svg width="20" height="20" fill="none" stroke="#fff" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg></div><div class="social-info"><div class="platform">Instagram</div><div class="handle">@thewildgoat.crete</div></div></a>
+          <a class="social-card facebook" href="https://www.facebook.com/TheWildGoat.Crete?rdid=8L1ENOHo2fyFDusF&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1HvMtZCc6X%2F#" target="_blank" rel="noopener"><div class="social-icon fb"><svg width="20" height="20" fill="none" stroke="#fff" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div><div class="social-info"><div class="platform">Facebook</div><div class="handle">TheWildGoat Crete</div></div></a>
+          <a class="social-card viber" href="https://invite.viber.com/?g=Zgk1kKnsq1OYTFGAbiJ0YWm5jY1b_wZ6&lang=en"><div class="social-icon vb"><svg width="20" height="20" fill="#fff" viewBox="0 0 24 24"><path d="M20.5 3.5C18.25 1.5 14.5.5 12 .5S5.75 1.5 3.5 3.5C1.5 5.25.5 8 .5 12c0 2.75.75 5 2 6.75V21a1 1 0 001.6.8l2.9-2.1c1.6.5 3.3.8 5 .8 2.5 0 6.25-1 8.5-3C22.5 15.25 23.5 12.5 23.5 12c0-2.5-1-6.25-3-8.5zM16 15.75c-.5.5-1.25.75-2 .75s-1.5-.25-2-.75c-1.5-1.5-2.5-3-3-4.5-.25-.75 0-1.5.5-2l.75-.75c.25-.25.5-.25.75 0l1.25 1.25c.25.25.25.5 0 .75L11.5 11c.5 1.25 1.25 2 2.5 2.5l.75-.75c.25-.25.5-.25.75 0l1.25 1.25c.25.25.25.5 0 .75z"/></svg></div><div class="social-info"><div class="platform">Viber</div><div class="handle">Message us directly</div></div></a>
+        </div>
+      </div>
+      <div class="contact-quote-block reveal" style="transition-delay:.15s">
+        <img class="contact-photo" src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=800&q=80&fit=crop&auto=format" alt="Mountain landscape at golden hour" loading="lazy"/>
+        <div class="contact-overlay"><blockquote class="contact-quote">"The mountain asks nothing but your full attention.<br/><em>We will take you there.</em>"</blockquote></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand"><img src="/logo.png" alt="The Wild Goat logo"/>The <span>Wild</span> Goat</div>
+  <div class="footer-center"><div style="margin-bottom:.35rem">Mountain Experiences - Crete, Greece</div><div style="font-size:.8rem;opacity:.55">2026 The Wild Goat - All rights reserved</div></div>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/thewildgoat" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+    <a href="https://www.facebook.com/TheWildGoat.Crete?rdid=8L1ENOHo2fyFDusF&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1HvMtZCc6X%2F#" target="_blank" rel="noopener" aria-label="Facebook"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+    <a href="https://invite.viber.com/?g=Zgk1kKnsq1OYTFGAbiJ0YWm5jY1b_wZ6&lang=en" aria-label="Viber"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.5 3.5C18.25 1.5 14.5.5 12 .5S5.75 1.5 3.5 3.5C1.5 5.25.5 8 .5 12c0 2.75.75 5 2 6.75V21a1 1 0 001.6.8l2.9-2.1c1.6.5 3.3.8 5 .8 2.5 0 6.25-1 8.5-3C22.5 15.25 23.5 12.5 23.5 12c0-2.5-1-6.25-3-8.5zM16 15.75c-.5.5-1.25.75-2 .75s-1.5-.25-2-.75c-1.5-1.5-2.5-3-3-4.5-.25-.75 0-1.5.5-2l.75-.75c.25-.25.5-.25.75 0l1.25 1.25c.25.25.25.5 0 .75L11.5 11c.5 1.25 1.25 2 2.5 2.5l.75-.75c.25-.25.5-.25.75 0l1.25 1.25c.25.25.25.5 0 .75z"/></svg></a>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Image viewer" aria-hidden="true">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Close"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <img id="lbImg" src="" alt=""/>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Next"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+  <div class="lightbox-cap" id="lbCap"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
+
+const heroPhoto = document.getElementById('heroPhoto');
+window.addEventListener('scroll', () => {
+  if (window.scrollY < window.innerHeight) heroPhoto.style.transform = 'translateY(' + (window.scrollY * 0.35) + 'px)';
+}, { passive: true });
+
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  document.body.style.overflow = open ? 'hidden' : '';
+  const s = hamburger.querySelectorAll('span');
+  if (open) { s[0].style.transform = 'translateY(6.5px) rotate(45deg)'; s[1].style.opacity = '0'; s[2].style.transform = 'translateY(-6.5px) rotate(-45deg)'; }
+  else { s.forEach(x => { x.style.transform = ''; x.style.opacity = ''; }); }
+});
+function closeMobile() {
+  mobileMenu.classList.remove('open'); document.body.style.overflow = '';
+  hamburger.querySelectorAll('span').forEach(x => { x.style.transform = ''; x.style.opacity = ''; });
+}
+
+const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+const wmo = { 0:'Clear sky', 1:'Mainly clear', 2:'Partly cloudy', 3:'Overcast', 45:'Foggy', 48:'Icy fog', 51:'Light drizzle', 53:'Drizzle', 55:'Heavy drizzle', 61:'Light rain', 63:'Rain', 65:'Heavy rain', 71:'Light snow', 73:'Snow', 75:'Heavy snow', 80:'Rain showers', 81:'Rain showers', 82:'Heavy showers', 85:'Snow showers', 95:'Thunderstorm', 96:'Thunderstorm', 99:'Thunderstorm' };
+async function fetchWeather(lat, lon, tid, did, wid) {
+  try {
+    const d = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,weather_code&wind_speed_unit=kmh&timezone=Europe/Athens`)).json();
+    const c = d.current;
+    document.getElementById(tid).innerHTML = Math.round(c.temperature_2m) + '<span class="weather-unit">C</span>';
+    document.getElementById(did).textContent = wmo[c.weather_code] || 'Unknown';
+    document.getElementById(wid).textContent = 'Wind: ' + Math.round(c.wind_speed_10m) + ' km/h';
+  } catch { document.getElementById(tid).innerHTML = '<span style="font-size:1rem;color:var(--stone-dim)">Unavailable</span>'; }
+}
+fetchWeather(35.22, 24.75, 'wt-psilo', 'wd-psilo', 'ww-psilo');
+fetchWeather(35.33, 23.98, 'wt-lefka', 'wd-lefka', 'ww-lefka');
+fetchWeather(35.12, 25.47, 'wt-dikti', 'wd-dikti', 'ww-dikti');
+
+const map = L.map('the-map', { zoomControl: true, scrollWheelZoom: false }).setView([35.18, 24.8], 9);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: 'OpenStreetMap', maxZoom: 17 }).addTo(map);
+const mkIcon = color => L.divIcon({ className:'', html:`<div style="width:12px;height:12px;background:${color};border-radius:50%;border:2px solid #f0ece2;box-shadow:0 0 8px ${color}88"></div>`, iconSize:[12,12], iconAnchor:[6,6] });
+const peaks = {
+  psilo: L.marker([35.22,24.75], {icon: mkIcon('#c25830')}).bindPopup('<b>Psiloritis</b><br/>2456m - Highest peak in Crete').addTo(map),
+  lefka: L.marker([35.33,23.98], {icon: mkIcon('#c25830')}).bindPopup('<b>Lefka Ori - Pachnes</b><br/>2453m - White Mountains').addTo(map),
+  dikti: L.marker([35.12,25.47], {icon: mkIcon('#c25830')}).bindPopup('<b>Dikti - Spathi</b><br/>2148m - Lasithi Range').addTo(map)
+};
+L.marker([35.32,23.97], {icon: mkIcon('#6b7c5a')}).bindPopup('<b>Samaria Gorge Entrance</b><br/>Omalos - start point').addTo(map);
+L.marker([35.27,24.0],  {icon: mkIcon('#6b7c5a')}).bindPopup('<b>Imbros Gorge</b><br/>Upper entrance at Imbros village').addTo(map);
+
+const defaultMapView = { center: [35.18, 24.8], zoom: 9 };
+let activePeak = null;
+function flyToPeak(key, el) {
+  const marker = peaks[key];
+  if (!marker) return;
+  document.querySelectorAll('.map-legend-item.active').forEach(i => i.classList.remove('active'));
+  // Second click on the same mountain: zoom back out to the full map
+  if (activePeak === key) {
+    activePeak = null;
+    map.closePopup();
+    map.flyTo(defaultMapView.center, defaultMapView.zoom, { duration: 1.4 });
+    return;
+  }
+  activePeak = key;
+  if (el) el.classList.add('active');
+  map.flyTo(marker.getLatLng(), 12, { duration: 1.4 });
+  map.once('moveend', () => marker.openPopup());
+}
+
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+let q1 = '', q2 = '';
+function nextStep(step, answer) {
+  if (step === 1) q1 = answer;
+  if (step === 2) q2 = answer;
+  document.getElementById('qd' + step).classList.add('done');
+  document.getElementById('step' + step).classList.remove('active');
+  document.getElementById('step' + (step + 1)).classList.add('active');
+}
+function showResult(landscape) {
+  document.getElementById('qd3').classList.add('done');
+  document.getElementById('step3').classList.remove('active');
+  const title = document.getElementById('resultTitle');
+  const desc = document.getElementById('resultDesc');
+  const extra = document.getElementById('resultExtra');
+  if (q2 === 'multi' || q1 === 'fit') {
+    title.textContent = 'Multi-Day Traverse';
+    desc.textContent = 'You are ready for the full experience. We recommend the Lefka Ori traverse to Pachnes, sleeping at the Kallergi shelter. Two days of true mountain wilderness with views that extend to both coasts.';
+    extra.textContent = 'Best in June through September. Group size: 2 to 6. Contact us to plan dates.';
+  } else if (q1 === 'active' && q2 === 'full' && landscape !== 'gorge') {
+    title.textContent = 'Psiloritis Summit';
+    desc.textContent = "A full-day ascent to Crete's highest point. Starting from the Nida Plateau, the route climbs through open limestone to 2456m. Not technical, but demanding. The reward is extraordinary.";
+    extra.textContent = 'Best April through October. Start time: 6:30am. Duration: 7 to 9 hours.';
+  } else if (q2 === 'half' || q1 === 'casual' || landscape === 'gorge') {
+    title.textContent = 'Imbros Gorge';
+    desc.textContent = 'The perfect introduction to Cretan mountains. 8km through a shaded gorge with dramatic limestone walls and wild herbs. Accessible, beautiful, and manageable for all levels. Ends at the coast.';
+    extra.textContent = 'Available year-round. Duration: 2.5 to 3 hours. Family-friendly.';
+  } else {
+    title.textContent = 'Samaria Gorge';
+    desc.textContent = "Europe's most famous gorge walk. A full day from the high plateau to the Libyan Sea through soaring walls and ancient ruins. Iconic for a reason, best experienced with a guide who knows the quieter sections.";
+    extra.textContent = 'May through October only. Duration: 6 to 7 hours. Ends with a boat.';
+  }
+  document.getElementById('quizResult').classList.add('show');
+}
+function restartQuiz() {
+  q1 = ''; q2 = '';
+  document.querySelectorAll('.quiz-dot').forEach(d => d.classList.remove('done'));
+  document.getElementById('quizResult').classList.remove('show');
+  document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step1').classList.add('active');
+}
+
+// --- ACTIVE-SECTION NAV HIGHLIGHT ---
+const navMap = {};
+document.querySelectorAll('.nav-links a, .mobile-bottom-bar a').forEach(a => {
+  const href = a.getAttribute('href');
+  if (href && href.startsWith('#') && href.length > 1) {
+    (navMap[href.slice(1)] = navMap[href.slice(1)] || []).push(a);
+  }
+});
+const sections = [...document.querySelectorAll('section[id]')];
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('.nav-links a.active, .mobile-bottom-bar a.active').forEach(a => a.classList.remove('active'));
+      (navMap[e.target.id] || []).forEach(a => a.classList.add('active'));
+    }
+  });
+}, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+sections.forEach(s => navObserver.observe(s));
+
+// --- LIGHTBOX ---
+const lightbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+const lbCap = document.getElementById('lbCap');
+const galleryItems = [...document.querySelectorAll('#galleryGrid .gallery-cell')];
+let lbIndex = 0;
+
+function showLbItem(i) {
+  lbIndex = (i + galleryItems.length) % galleryItems.length;
+  const cell = galleryItems[lbIndex];
+  lbImg.src = cell.getAttribute('data-full');
+  lbImg.alt = cell.getAttribute('data-cap') || 'Mountain photograph';
+  lbCap.textContent = cell.getAttribute('data-cap') || '';
+}
+function openLightbox(cell) {
+  showLbItem(galleryItems.indexOf(cell));
+  lightbox.classList.add('open');
+  lightbox.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  lightbox.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', e => { e.stopPropagation(); showLbItem(lbIndex - 1); });
+document.getElementById('lbNext').addEventListener('click', e => { e.stopPropagation(); showLbItem(lbIndex + 1); });
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') showLbItem(lbIndex - 1);
+  if (e.key === 'ArrowRight') showLbItem(lbIndex + 1);
+});
+</script>
+</body>
+</html>

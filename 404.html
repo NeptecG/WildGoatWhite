@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>404 - Αγριοκάτσικο</title>
+  <meta name="robots" content="noindex"/>
+  <link rel="icon" type="image/png" href="/logo.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Commissioner:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f5eede; --stone: #433c2b; --stone-dim: #6c6450;
+      --terracotta: #be541f; --white: #2a281d;
+    }
+    html, body { height: 100%; }
+    body {
+      background:
+        radial-gradient(ellipse 90% 70% at 50% 28%, rgba(255,234,196,.7) 0%, rgba(245,238,222,0) 70%),
+        var(--bg);
+      color: var(--stone); font-family: 'Commissioner', sans-serif; font-weight: 300;
+      min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 2.5rem 1.5rem; overflow-x: hidden;
+    }
+    .logo { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; box-shadow: 0 6px 22px rgba(80,55,25,.22); margin-bottom: 1.75rem; }
+    .eyebrow { font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: var(--terracotta); font-weight: 600; margin-bottom: 1.1rem; }
+    .code {
+      font-family: 'EB Garamond', serif; font-weight: 500; line-height: 1;
+      font-size: clamp(5rem, 21vw, 10.5rem); color: var(--white);
+      letter-spacing: .02em; margin-bottom: .6rem;
+      font-variant-numeric: lining-nums tabular-nums; font-feature-settings: "lnum" 1, "tnum" 1;
+    }
+    .code em { font-style: italic; color: var(--terracotta); }
+    h1 { font-family: 'EB Garamond', serif; font-weight: 400; font-size: clamp(1.8rem, 5vw, 2.8rem); color: var(--white); line-height: 1.15; margin-bottom: 1rem; }
+    p.lead { font-size: .95rem; color: var(--stone-dim); line-height: 1.7; max-width: 470px; margin: 0 auto 2.5rem; }
+    .actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; padding: .85rem 1.5rem; min-height: 44px; min-width: 200px;
+      text-decoration: none; font-size: .7rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+      transition: background .3s, color .3s, border-color .3s;
+    }
+    .btn-primary { background: var(--terracotta); color: var(--white); border: 1px solid var(--terracotta); }
+    .btn-primary:hover { background: transparent; color: var(--terracotta); }
+    .btn-ghost { background: transparent; color: var(--stone); border: 1px solid rgba(120,90,50,.32); }
+    .btn-ghost:hover { border-color: var(--terracotta); color: var(--terracotta); }
+  </style>
+</head>
+<body>
+  <img class="logo" src="/logo.png" alt="Λογότυπο Αγριοκάτσικο"/>
+  <p class="eyebrow" id="eyebrow">ΣΦΑΛΜΑ 404</p>
+  <div class="code">4<em>0</em>4</div>
+  <h1 id="headline">Χαθήκατε στο βουνό</h1>
+  <p class="lead" id="lead">Η σελίδα που ψάχνετε δεν υπάρχει ή έχει μετακινηθεί. Ας σας γυρίσουμε πίσω στο μονοπάτι.</p>
+  <div class="actions">
+    <a class="btn btn-primary" href="/">ΑΡΧΙΚΗ ΣΕΛΙΔΑ</a>
+    <a class="btn btn-ghost" href="/en/">Home Page</a>
+  </div>
+
+  <script>
+    // If the broken link was under /en/, show the page fully in English.
+    if (location.pathname.toLowerCase().indexOf('/en/') === 0) {
+      document.documentElement.lang = 'en';
+      document.title = '404 - The Wild Goat';
+      document.getElementById('eyebrow').textContent = 'Error 404';
+      document.getElementById('headline').textContent = 'Lost on the mountain';
+      document.getElementById('lead').textContent = "The page you're looking for doesn't exist or has moved. Let's get you back on the trail.";
+    }
+  </script>
+</body>
+</html>
