@@ -197,8 +197,8 @@
     .route-season { margin-top: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--sage-light); }
 
     #map-section { padding: 8rem 0; background: var(--surface); }
-    .map-wrap { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-top: 3rem; }
-    #the-map { height: 480px; border: 1px solid rgba(107,124,90,.2); position: relative; z-index: 1; }
+    .map-wrap { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: stretch; margin-top: 3rem; }
+    #the-map { height: 100%; min-height: 520px; border: 1px solid rgba(107,124,90,.2); position: relative; z-index: 1; }
     .map-legend { display: flex; flex-direction: column; gap: 1.5rem; }
     .map-legend-item { padding: 1.5rem; background: var(--surface-2); border-left: 3px solid var(--terracotta); cursor: pointer; transition: background .3s, transform .3s, box-shadow .3s; position: relative; }
     .map-legend-item:hover { background: #1e2a1e; transform: translateX(4px); }
@@ -401,7 +401,7 @@
       .stat-row { gap: 1.5rem; }
       .mountains-header { flex-direction: column; align-items: flex-start; }
       .map-wrap { grid-template-columns: 1fr; }
-      #the-map { height: 320px; }
+      #the-map { height: 320px; min-height: 0; }
     }
     @media (max-width: 540px) {
       .weather-grid { grid-template-columns: 1fr; }
@@ -454,6 +454,12 @@
     #testimonials .testi-text { color: #2c332a; }
     #testimonials .testi-author { color: #5a6452; }
     #testimonials .testi-route { color: #b14a22; }
+
+    /* Mountain card label: brighter orange over the dark photo + a touch larger */
+    .card-alt { color: #f0863f; font-size: .8rem; text-shadow: 0 1px 10px rgba(0,0,0,.95), 0 1px 3px rgba(0,0,0,.9); }
+    /* Lightbox stays a dark photo viewer: keep its icons + caption light, and lift buttons above the image */
+    .lb-btn { color: #f0ece2; z-index: 10; }
+    .lightbox-cap { color: #e2d9c4; }
   </style>
 </head>
 <body>
@@ -707,6 +713,39 @@
         <p class="route-desc">Μια κυκλική διαδρομή πάνω από το Οροπέδιο Λασιθίου ως την κορυφή Σπαθί στα 2148μ. Πιο πράσινη και πιο δασωμένη από τη δυτική Κρήτη. Η κατάβαση περνά από το Δικταίον Άντρον, τον θρυλικό τόπο γέννησης του Δία, πριν κλείσει τον κύκλο μέσα από ανθισμένα λιβάδια.</p>
         <div class="route-season">Καλύτερη εποχή: Μάιος - Οκτώβριος</div>
       </div>
+      <div class="route-card reveal">
+        <span class="route-difficulty diff-hard">Δύσκολη</span>
+        <div class="route-name">Κόφινας από τα Καπετανιανά</div>
+        <div class="route-meta">
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>11 χλμ</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>5 ώρες</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>+900μ</span>
+        </div>
+        <p class="route-desc">Ανάβαση στην κορυφή του Κόφινα (1231μ), του ψηλότερου σημείου των Αστερουσίων. Ξεκινάμε από τα γραφικά Καπετανιανά και ανηφορίζουμε σε γυμνές, ηλιόλουστες πλαγιές με θέα που αγκαλιάζει όλο το Λιβυκό Πέλαγος. Στην κορυφή, ένα μικρό εκκλησάκι.</p>
+        <div class="route-season">Καλύτερη εποχή: Μάρτιος - Νοέμβριος</div>
+      </div>
+      <div class="route-card reveal" style="transition-delay:.07s">
+        <span class="route-difficulty diff-easy">Εύκολη</span>
+        <div class="route-name">Φαράγγι Αγιοφάραγγου</div>
+        <div class="route-meta">
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>5 χλμ</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 ώρες</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>-250μ</span>
+        </div>
+        <p class="route-desc">Ένα σύντομο, μαγευτικό φαράγγι στα Αστερούσια που καταλήγει σε μια απομονωμένη παραλία στο Λιβυκό Πέλαγος. Ασβεστολιθικοί τοίχοι, παλιά ασκηταριά σκαλισμένα στον βράχο και ένα δροσερό μονοπάτι. Ιδανικό για οικογένειες, με βουτιά στο τέλος.</p>
+        <div class="route-season">Καλύτερη εποχή: Όλο τον χρόνο</div>
+      </div>
+      <div class="route-card reveal" style="transition-delay:.14s">
+        <span class="route-difficulty diff-moderate">Μέτρια</span>
+        <div class="route-name">Φαράγγι Ρούβα (Ζαρός)</div>
+        <div class="route-meta">
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>12 χλμ</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>5 ώρες</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>+500μ</span>
+        </div>
+        <p class="route-desc">Ένα από τα πιο πράσινα φαράγγια της Κρήτης, στους πρόποδες του Ψηλορείτη πάνω από τον Ζαρό. Αιωνόβια πρίνα, τρεχούμενα νερά και σκιά σε όλη τη διαδρομή ως το οροπέδιο της Ρούβας. Δροσερή ανάσα ακόμη και μέσα στο καλοκαίρι.</p>
+        <div class="route-season">Καλύτερη εποχή: Απρίλιος - Οκτώβριος</div>
+      </div>
     </div>
   </div>
 </section>
@@ -901,7 +940,7 @@
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Τι πρέπει να φέρω σε μια ορεινή πεζοπορία στην Κρήτη;<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">Κατ' ελάχιστον: γερά ορειβατικά παπούτσια που στηρίζουν τον αστράγαλο, τουλάχιστον 2 λίτρα νερό ανά άτομο, αντηλιακή προστασία (καπέλο, αντηλιακό, γυαλιά), ένα ελαφρύ αντιανεμικό ακόμη και το καλοκαίρι, ενεργειακά σνακ και ένα πλήρως φορτισμένο κινητό. Για κορυφές πάνω από 2000μ, συνιστάται ένα επιπλέον θερμικό στρώμα ακόμη και τον Ιούλιο. Σας δίνουμε αναλυτική λίστα εξοπλισμού όταν κλείνετε μαζί μας.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Πρέπει να είμαι έμπειρος πεζοπόρος;<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">Καθόλου. Έχουμε διαδρομές για όλα τα επίπεδα. Οι πεζοπορίες σε φαράγγια όπως η Ίμπρος και η Αγία Ειρήνη είναι κατάλληλες για όποιον μπορεί να περπατήσει 3 ώρες σε ανώμαλο έδαφος. Οι διαδρομές κορυφής απαιτούν καλύτερη φυσική κατάσταση αλλά δεν είναι τεχνική αναρρίχηση. Πάντα προσαρμόζουμε τη διαδρομή στις δυνατότητες της ομάδας σας.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Πώς κλείνω μια εκδρομή με το Αγριοκάτσικο;<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">Χωρίς φόρμες, χωρίς πλατφόρμες κρατήσεων. Στείλτε μας μήνυμα απευθείας στο Instagram, στο Facebook ή στο Viber. Πείτε μας τις ημερομηνίες σας, το μέγεθος της ομάδας, το επίπεδο φυσικής κατάστασης και τι είδους εμπειρία αναζητάτε. Θα απαντήσουμε μέσα σε λίγες ώρες και θα τα σχεδιάσουμε όλα μαζί, προσωπικά. Έτσι το προτιμούμε.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Ποια είναι η καλύτερη εποχή για επίσκεψη;<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">Για τα φαράγγια: η άνοιξη (Απρίλιος έως Ιούνιος) είναι ιδανική, όταν τα αγριολούλουδα ανθίζουν και τα ρυάκια ακόμη τρέχουν. Για τις κορυφές: από Ιούνιο έως Σεπτέμβριο, αποφεύγοντας τη ζέστη του μεσημεριού τον Ιούλιο και τον Αύγουστο με πρωινό ξεκίνημα. Το φθινόπωρο (Σεπτέμβριος έως Οκτώβριος) είναι ένα από τα καλύτερα κρυμμένα μυστικά, με σταθερό καιρό, λιγότερο κόσμο και χρυσό φως.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Ποια είναι η καλύτερη εποχή για επίσκεψη;<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">Για τα φαράγγια: η άνοιξη (Απρίλιος έως Ιούνιος) είναι ιδανική, όταν τα αγριολούλουδα ανθίζουν και τα ρυάκια ακόμη τρέχουν. Για τις κορυφές: από Ιούνιο έως Σεπτέμβριο, αποφεύγοντας τη ζέστη του μεσημεριού τον Ιούλιο και τον Αύγουστο με πρωινό ξεκίνημα. Το φθινόπωρο (Σεπτέμβριος έως Οκτώβριος) είναι ένα από τα καλύτερα κρυμμένα μυστικά, με σταθερό καιρό, λιγότερο κόσμο και χρυσό φως. Τα χαμηλά, ηλιόλουστα Αστερούσια στον νότο είναι απολαυστικά σχεδόν όλο τον χρόνο, ιδιαίτερα την άνοιξη και το φθινόπωρο.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Πόσο μεγάλες είναι οι ομάδες σας;<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">Κρατάμε τις ομάδες μικρές, συνήθως από 2 έως 8 άτομα. Δεν είμαστε επιχείρηση τουριστικών λεωφορείων. Οι μικρότερες ομάδες κινούνται καλύτερα, ζουν περισσότερα, και ο οδηγός μπορεί να δώσει σε όλους πραγματική προσοχή. Δεχόμαστε επίσης μοναχικούς ταξιδιώτες και ζευγάρια.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Είναι ασφαλείς οι διαδρομές;<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">Ναι, όταν τις προσεγγίζεις σωστά. Τα βουνά αξίζουν σεβασμό και προετοιμασία. Παρακολουθούμε στενά τις προγνώσεις καιρού, προσαρμόζουμε ή ακυρώνουμε αν οι συνθήκες δεν είναι ασφαλείς, μεταφέρουμε κουτιά πρώτων βοηθειών και ενημερώνουμε για τις λεπτομέρειες της διαδρομής πριν από κάθε αναχώρηση. Οι οδηγοί μας έχουν χρόνια εμπειρίας σε αυτά τα συγκεκριμένα μονοπάτια σε όλες τις εποχές. Η ασφάλεια δεν είναι διαπραγματεύσιμη.</div></div>
     </div>
@@ -1047,6 +1086,10 @@ function showResult(landscape) {
     title.textContent = 'Πολυήμερη Διάσχιση';
     desc.textContent = 'Είστε έτοιμοι για την πλήρη εμπειρία. Προτείνουμε τη διάσχιση των Λευκών Ορέων ως τις Πάχνες, με διανυκτέρευση στο καταφύγιο Καλλέργη. Δύο μέρες αληθινής ορεινής ερημιάς με θέα που απλώνεται και στις δύο ακτές.';
     extra.textContent = 'Ιδανικό από Ιούνιο έως Σεπτέμβριο. Μέγεθος ομάδας: 2 έως 6. Επικοινωνήστε μαζί μας για να ορίσουμε ημερομηνίες.';
+  } else if (landscape === 'remote') {
+    title.textContent = 'Αστερούσια - Κόφινας';
+    desc.textContent = 'Η νοτιότερη οροσειρά της Ευρώπης, μακριά από τον κόσμο. Ανηφορίζουμε προς τον Κόφινα με θέα στο Λιβυκό Πέλαγος, ανάμεσα σε απομονωμένα μοναστήρια και άγριες πλαγιές. Ησυχία, ήλιος και ανοιχτοί ορίζοντες.';
+    extra.textContent = 'Ιδανικό από Μάρτιο έως Νοέμβριο. Διάρκεια: 4 έως 6 ώρες. Πρόσβαση από τα Καπετανιανά.';
   } else if (q1 === 'active' && q2 === 'full' && landscape !== 'gorge') {
     title.textContent = 'Κορυφή Ψηλορείτη';
     desc.textContent = 'Μια ολοήμερη ανάβαση στο ψηλότερο σημείο της Κρήτης. Ξεκινώντας από το Οροπέδιο Νίδας, η διαδρομή ανεβαίνει μέσα από ανοιχτό ασβεστόλιθο ως τα 2456μ. Όχι τεχνική, αλλά απαιτητική. Η ανταμοιβή είναι εξαιρετική.';

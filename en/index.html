@@ -196,8 +196,8 @@
     .route-season { margin-top: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--sage-light); }
 
     #map-section { padding: 8rem 0; background: var(--surface); }
-    .map-wrap { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-top: 3rem; }
-    #the-map { height: 480px; border: 1px solid rgba(107,124,90,.2); position: relative; z-index: 1; }
+    .map-wrap { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: stretch; margin-top: 3rem; }
+    #the-map { height: 100%; min-height: 520px; border: 1px solid rgba(107,124,90,.2); position: relative; z-index: 1; }
     .map-legend { display: flex; flex-direction: column; gap: 1.5rem; }
     .map-legend-item { padding: 1.5rem; background: var(--surface-2); border-left: 3px solid var(--terracotta); cursor: pointer; transition: background .3s, transform .3s, box-shadow .3s; position: relative; }
     .map-legend-item:hover { background: #1e2a1e; transform: translateX(4px); }
@@ -400,7 +400,7 @@
       .stat-row { gap: 1.5rem; }
       .mountains-header { flex-direction: column; align-items: flex-start; }
       .map-wrap { grid-template-columns: 1fr; }
-      #the-map { height: 320px; }
+      #the-map { height: 320px; min-height: 0; }
     }
     @media (max-width: 540px) {
       .weather-grid { grid-template-columns: 1fr; }
@@ -453,6 +453,12 @@
     #testimonials .testi-text { color: #2c332a; }
     #testimonials .testi-author { color: #5a6452; }
     #testimonials .testi-route { color: #b14a22; }
+
+    /* Mountain card label: brighter orange over the dark photo + a touch larger */
+    .card-alt { color: #f0863f; font-size: .8rem; text-shadow: 0 1px 10px rgba(0,0,0,.95), 0 1px 3px rgba(0,0,0,.9); }
+    /* Lightbox stays a dark photo viewer: keep its icons + caption light, and lift buttons above the image */
+    .lb-btn { color: #f0ece2; z-index: 10; }
+    .lightbox-cap { color: #e2d9c4; }
   </style>
 </head>
 <body>
@@ -706,6 +712,39 @@
         <p class="route-desc">A circular route above the Lasithi Plateau to the summit of Spathi at 2148m. Greener and more forested than western Crete. The descent passes the Diktaion Cave, legendary birthplace of Zeus, before looping through flowering meadows.</p>
         <div class="route-season">Best season: May - October</div>
       </div>
+      <div class="route-card reveal">
+        <span class="route-difficulty diff-hard">Hard</span>
+        <div class="route-name">Kofinas from Kapetaniana</div>
+        <div class="route-meta">
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>11 km</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>5 hours</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>+900m</span>
+        </div>
+        <p class="route-desc">An ascent to the summit of Kofinas (1231m), the highest point of the Asterousia. We start from the picturesque village of Kapetaniana and climb bare, sun-baked slopes with views that wrap around the whole Libyan Sea. A tiny chapel waits at the top.</p>
+        <div class="route-season">Best season: March - November</div>
+      </div>
+      <div class="route-card reveal" style="transition-delay:.07s">
+        <span class="route-difficulty diff-easy">Easy</span>
+        <div class="route-name">Agiofarango Gorge</div>
+        <div class="route-meta">
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>5 km</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 hours</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>-250m</span>
+        </div>
+        <p class="route-desc">A short, magical gorge in the Asterousia that ends at a secluded beach on the Libyan Sea. Limestone walls, old hermit cells carved into the rock, and a cool, shaded path. Perfect for families, with a swim at the end.</p>
+        <div class="route-season">Best season: Year-round</div>
+      </div>
+      <div class="route-card reveal" style="transition-delay:.14s">
+        <span class="route-difficulty diff-moderate">Moderate</span>
+        <div class="route-name">Rouvas Gorge (Zaros)</div>
+        <div class="route-meta">
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>12 km</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>5 hours</span>
+          <span><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>+500m</span>
+        </div>
+        <p class="route-desc">One of the greenest gorges in Crete, on the foothills of Psiloritis above Zaros. Ancient holm oaks, running water, and shade the whole way up to the Rouvas plateau. A cool escape even in high summer.</p>
+        <div class="route-season">Best season: April - October</div>
+      </div>
     </div>
   </div>
 </section>
@@ -900,7 +939,7 @@
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What should I bring on a mountain hike in Crete?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">At minimum: sturdy hiking boots with ankle support, at least 2 litres of water per person, sun protection (hat, sunscreen, sunglasses), a light windproof layer even in summer, high-energy snacks, and a fully charged phone. For summits above 2000m, an extra insulating layer is recommended even in July. We provide a detailed packing list when you book with us.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Do I need to be a serious hiker?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">Not at all. We have routes for all levels. The gorge walks like Imbros and Agia Irini are suitable for anyone who can walk for 3 hours on uneven ground. The summit routes require better fitness but are not technical climbing. We will always match the route to your group's ability.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How do I book a trip with The Wild Goat?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">No forms, no booking platforms. Message us directly on Instagram, Facebook, or Viber. Tell us your dates, group size, fitness level, and what kind of experience you are looking for. We will respond within a few hours and plan everything together personally. We prefer it this way.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the best time of year to visit?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">For gorges: spring (April to June) is ideal when wildflowers are in bloom and the streams still flow. For summits: June through September, avoiding the heat of midday in July and August by starting early. Autumn (September to October) is one of the best-kept secrets, with stable weather, fewer people, and golden light.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the best time of year to visit?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">For gorges: spring (April to June) is ideal when wildflowers are in bloom and the streams still flow. For summits: June through September, avoiding the heat of midday in July and August by starting early. Autumn (September to October) is one of the best-kept secrets, with stable weather, fewer people, and golden light. The low, sunny Asterousia in the south are enjoyable almost year-round, especially in spring and autumn.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How large are your groups?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">We keep groups small, typically between 2 and 8 people. This is not a tour bus operation. Smaller groups move better, experience more, and the guide can give everyone real attention. We also take solo travellers and couples.</div></div>
       <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Are the routes safe?<svg class="faq-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a">Yes, when approached correctly. The mountains deserve respect and preparation. We check weather forecasts closely, adjust or cancel if conditions are unsafe, carry first aid kits, and communicate route details before every departure. Our guides have years of experience on these specific trails in all seasons. Safety is not negotiable.</div></div>
     </div>
@@ -1046,6 +1085,10 @@ function showResult(landscape) {
     title.textContent = 'Multi-Day Traverse';
     desc.textContent = 'You are ready for the full experience. We recommend the Lefka Ori traverse to Pachnes, sleeping at the Kallergi shelter. Two days of true mountain wilderness with views that extend to both coasts.';
     extra.textContent = 'Best in June through September. Group size: 2 to 6. Contact us to plan dates.';
+  } else if (landscape === 'remote') {
+    title.textContent = 'Asterousia - Kofinas';
+    desc.textContent = "Europe's southernmost range, far from the crowds. We climb toward Kofinas with views over the Libyan Sea, past remote monasteries and wild slopes. Quiet, sun, and open horizons.";
+    extra.textContent = 'Best March to November. Duration: 4 to 6 hours. Access from Kapetaniana.';
   } else if (q1 === 'active' && q2 === 'full' && landscape !== 'gorge') {
     title.textContent = 'Psiloritis Summit';
     desc.textContent = "A full-day ascent to Crete's highest point. Starting from the Nida Plateau, the route climbs through open limestone to 2456m. Not technical, but demanding. The reward is extraordinary.";
