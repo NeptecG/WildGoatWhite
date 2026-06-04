@@ -260,9 +260,9 @@
     .flora-card { position: relative; overflow: hidden; aspect-ratio: 3/4; }
     .flora-photo { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform .6s; }
     .flora-card:hover .flora-photo { transform: scale(1.06); }
-    .flora-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(11,16,13,.95) 0%, rgba(11,16,13,.1) 60%); }
+    .flora-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(11,16,13,.96) 0%, rgba(11,16,13,.8) 42%, rgba(11,16,13,.35) 72%, transparent 100%); }
     .flora-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; }
-    .flora-type { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--terracotta); margin-bottom: .4rem; }
+    .flora-type { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: #f0863f; margin-bottom: .4rem; text-shadow: 0 1px 8px rgba(0,0,0,.9), 0 1px 3px rgba(0,0,0,.85); }
     .flora-name { font-family: 'EB Garamond', serif; font-size: 1.3rem; line-height: 1.15; color: var(--white); margin-bottom: .35rem; }
     .flora-latin { font-size: .7rem; font-style: italic; color: var(--stone-dim); margin-bottom: .5rem; }
     .flora-desc { font-size: .82rem; color: var(--stone-dim); line-height: 1.55; }
@@ -341,7 +341,7 @@
     @media (prefers-reduced-motion: reduce) { .nav-links a::after { transition: none; } }
 
     /* Stronger gradient so mountain-card labels stay readable */
-    .card-overlay { background: linear-gradient(to top, rgba(11,16,13,.96) 0%, rgba(11,16,13,.55) 38%, transparent 65%); }
+    .card-overlay { background: linear-gradient(to top, rgba(11,16,13,.97) 0%, rgba(11,16,13,.82) 42%, rgba(11,16,13,.35) 72%, transparent 100%); }
     .card-alt { text-shadow: 0 1px 8px rgba(0,0,0,.8); }
 
     /* Gallery + mountain photos are clickable */
@@ -390,13 +390,16 @@
       .about-accent { right: 1rem; bottom: -1.5rem; width: 130px; height: 130px; }
       .about-accent .num { font-size: 2.2rem; }
       .mountain-cards { grid-template-columns: 1fr; }
-      .mountain-card { aspect-ratio: 16/9; }
+      .mountain-card { aspect-ratio: 1/1; }
+      .mountain-card .card-desc { display: -webkit-box; opacity: 1; transform: none; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent 100%); mask-image: linear-gradient(to bottom, #000 58%, transparent 100%); }
+      .mountain-card .card-more { display: inline-block; }
       .route-cards { grid-template-columns: 1fr; }
       .exp-grid { grid-template-columns: 1fr; }
       .testi-grid { grid-template-columns: 1fr; }
       .flora-grid { grid-template-columns: repeat(2, 1fr); }
       .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 180px); }
       .gallery-cell:first-child { grid-column: span 2; grid-row: span 1; }
+      .lb-prev, .lb-next { display: none; }
       .stat-row { gap: 1.5rem; }
       .mountains-header { flex-direction: column; align-items: flex-start; }
       .map-wrap { grid-template-columns: 1fr; }
@@ -405,6 +408,8 @@
     @media (max-width: 540px) {
       .weather-grid { grid-template-columns: 1fr; }
       .flora-grid { grid-template-columns: 1fr 1fr; }
+      .flora-card { aspect-ratio: auto; min-height: 270px; display: flex; flex-direction: column; }
+      .flora-content { position: relative; margin-top: auto; }
       .section-title { font-size: clamp(1.9rem, 8vw, 2.8rem); }
       .exp-item { padding: 2rem; }
       .route-card { padding: 1.5rem; }
@@ -459,6 +464,24 @@
     /* Lightbox stays a dark photo viewer: keep its icons + caption light, and lift buttons above the image */
     .lb-btn { color: #f0ece2; z-index: 10; }
     .lightbox-cap { color: #e2d9c4; }
+
+    /* Flora cards: clamp the story with a fade, tap the image to open the full card */
+    .flora-card { cursor: zoom-in; }
+    .flora-desc { display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%); mask-image: linear-gradient(to bottom, #000 55%, transparent 100%); }
+    .flora-more { display: inline-block; margin-top: .65rem; font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: #f0863f; font-weight: 600; }
+    .card-more { display: none; margin-top: .55rem; font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: #f0863f; font-weight: 600; }
+    .flora-modal { position: fixed; inset: 0; z-index: 320; background: rgba(7,10,8,.82); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+    .flora-modal.open { opacity: 1; pointer-events: auto; }
+    .fm-card { background: #fffef8; max-width: 460px; width: 100%; max-height: 88vh; overflow-y: auto; border-radius: 5px; box-shadow: 0 30px 70px rgba(0,0,0,.5); transform: scale(.96); transition: transform .3s ease; }
+    .flora-modal.open .fm-card { transform: scale(1); }
+    .fm-photo { width: 100%; aspect-ratio: 4/3; background-size: cover; background-position: center; }
+    .fm-body { padding: 1.75rem; }
+    .fm-type { font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: var(--terracotta); font-weight: 600; margin-bottom: .5rem; }
+    .fm-name { font-family: 'EB Garamond', serif; font-size: 1.9rem; color: var(--stone); line-height: 1.1; margin-bottom: .35rem; }
+    .fm-latin { font-size: .82rem; font-style: italic; color: var(--stone-dim); margin-bottom: 1rem; }
+    .fm-desc { font-size: .95rem; color: var(--stone-dim); line-height: 1.7; }
+    .fm-close { position: fixed; top: 4vh; right: 5vw; background: rgba(11,16,13,.55); border: 1px solid rgba(240,236,226,.25); color: #f0ece2; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; transition: background .3s, border-color .3s; }
+    .fm-close:hover { background: var(--terracotta); border-color: var(--terracotta); }
   </style>
 </head>
 <body>
@@ -987,6 +1010,19 @@
   <div class="lightbox-cap" id="lbCap"></div>
 </div>
 
+<div class="flora-modal" id="floraModal" role="dialog" aria-label="Wildlife" aria-hidden="true">
+  <button class="fm-close" id="fmClose" aria-label="Close"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  <div class="fm-card">
+    <div class="fm-photo" id="fmPhoto"></div>
+    <div class="fm-body">
+      <div class="fm-type" id="fmType"></div>
+      <div class="fm-name" id="fmName"></div>
+      <div class="fm-latin" id="fmLatin"></div>
+      <div class="fm-desc" id="fmDesc"></div>
+    </div>
+  </div>
+</div>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const navbar = document.getElementById('navbar');
@@ -1176,6 +1212,73 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft') showLbItem(lbIndex - 1);
   if (e.key === 'ArrowRight') showLbItem(lbIndex + 1);
 });
+// Swipe left/right to move between photos on touch devices
+let lbTouchX = null, lbTouchY = null;
+lightbox.addEventListener('touchstart', e => { const t = e.changedTouches[0]; lbTouchX = t.clientX; lbTouchY = t.clientY; }, { passive: true });
+lightbox.addEventListener('touchend', e => {
+  if (lbTouchX === null) return;
+  const t = e.changedTouches[0];
+  const dx = t.clientX - lbTouchX, dy = t.clientY - lbTouchY;
+  if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+    showLbItem(dx < 0 ? lbIndex + 1 : lbIndex - 1);
+  }
+  lbTouchX = lbTouchY = null;
+}, { passive: true });
+
+// --- FLORA MODAL: tap a card to read the full story ---
+const floraModal = document.getElementById('floraModal');
+function openFlora(card) {
+  document.getElementById('fmPhoto').style.backgroundImage = card.querySelector('.flora-photo').style.backgroundImage;
+  document.getElementById('fmType').textContent = card.querySelector('.flora-type').textContent;
+  document.getElementById('fmName').textContent = card.querySelector('.flora-name').textContent;
+  document.getElementById('fmLatin').textContent = card.querySelector('.flora-latin').textContent;
+  document.getElementById('fmDesc').textContent = card.querySelector('.flora-desc').textContent;
+  floraModal.classList.add('open');
+  floraModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+function closeFlora() {
+  floraModal.classList.remove('open');
+  floraModal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.flora-card').forEach(card => {
+  const more = document.createElement('span');
+  more.className = 'flora-more';
+  more.textContent = 'Read more →';
+  const content = card.querySelector('.flora-content');
+  if (content) content.appendChild(more);
+  card.setAttribute('role', 'button');
+  card.setAttribute('tabindex', '0');
+  card.addEventListener('click', () => openFlora(card));
+  card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openFlora(card); } });
+});
+// Mountain cards reuse the same zoom modal for the full story
+function openMountain(card) {
+  document.getElementById('fmPhoto').style.backgroundImage = card.querySelector('.card-photo').style.backgroundImage;
+  document.getElementById('fmType').textContent = card.querySelector('.card-alt').textContent;
+  const parts = card.querySelector('.card-name').innerHTML.split(/<br\s*\/?>/i);
+  document.getElementById('fmName').textContent = parts[0].replace(/<[^>]+>/g, '').trim();
+  document.getElementById('fmLatin').textContent = parts[1] ? parts[1].replace(/<[^>]+>/g, '').trim() : '';
+  document.getElementById('fmDesc').textContent = card.querySelector('.card-desc').textContent;
+  floraModal.classList.add('open');
+  floraModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+document.querySelectorAll('.mountain-card').forEach(card => {
+  const more = document.createElement('span');
+  more.className = 'card-more';
+  more.textContent = 'Read more →';
+  const content = card.querySelector('.card-content');
+  if (content) content.appendChild(more);
+  card.setAttribute('role', 'button');
+  card.setAttribute('tabindex', '0');
+  card.addEventListener('click', () => openMountain(card));
+  card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMountain(card); } });
+});
+document.getElementById('fmClose').addEventListener('click', closeFlora);
+floraModal.addEventListener('click', e => { if (e.target === floraModal) closeFlora(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && floraModal.classList.contains('open')) closeFlora(); });
 </script>
 </body>
 </html>
