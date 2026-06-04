@@ -44,7 +44,8 @@
     "areaServed": [
       { "@type": "Place", "name": "Λευκά Όρη, Κρήτη" },
       { "@type": "Place", "name": "Ψηλορείτης, Κρήτη" },
-      { "@type": "Place", "name": "Δίκτη, Κρήτη" }
+      { "@type": "Place", "name": "Δίκτη, Κρήτη" },
+      { "@type": "Place", "name": "Αστερούσια Όρη, Κρήτη" }
     ],
     "address": {
       "@type": "PostalAddress",
@@ -156,7 +157,7 @@
     .stat .lbl { font-size: .7rem; letter-spacing: .1em; color: var(--stone-dim); }
 
     #weather { padding: 5rem 0; background: var(--bg); }
-    .weather-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .weather-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3rem; }
     .weather-card { background: var(--surface); border: 1px solid rgba(107,124,90,.15); padding: 2rem; text-align: center; }
     .weather-peak { font-size: .65rem; letter-spacing: .25em; text-transform: uppercase; color: var(--terracotta); margin-bottom: .75rem; }
     .weather-temp { font-family: 'EB Garamond', serif; font-size: 3.5rem; font-weight: 300; color: var(--white); line-height: 1; min-height: 3.5rem; display: flex; align-items: center; justify-content: center; font-variant-numeric: lining-nums tabular-nums; font-feature-settings: "lnum" 1, "tnum" 1; }
@@ -166,7 +167,7 @@
 
     #mountains { padding: 8rem 0; background: var(--surface); }
     .mountains-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem; }
-    .mountain-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; }
+    .mountain-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5px; }
     .mountain-card { position: relative; overflow: hidden; aspect-ratio: 2/3; cursor: pointer; }
     .card-photo { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform .6s ease; }
     .mountain-card:hover .card-photo { transform: scale(1.06); }
@@ -376,6 +377,8 @@
     @media (max-width: 1100px) {
       .route-cards { grid-template-columns: repeat(2, 1fr); }
       .flora-grid { grid-template-columns: repeat(2, 1fr); }
+      .mountain-cards { grid-template-columns: repeat(2, 1fr); }
+      .weather-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 900px) {
       .nav-links, .nav-social { display: none; }
@@ -527,10 +530,10 @@
         <p class="section-label">Σχετικά με Εμάς</p>
         <h2 class="section-title">Γεννημένοι από<br/><em>την πέτρα</em></h2>
         <p class="about-body">Το Αγριοκάτσικο είναι ο οδηγός σας στα άγρια, αρχέγονα ορεινά της Κρήτης. Όπως το ευκίνητο κρι-κρι, το αγριοκάτσικο της Κρήτης που διασχίζει κάθετους ασβεστολιθικούς βράχους με απίστευτη χάρη, κινούμαστε σε αυτά τα βουνά με γνώση, σιγουριά και βαθύ σεβασμό.</p>
-        <p class="about-body">Είμαστε άνθρωποι του βουνού. Γνωρίζουμε τα Λευκά Όρη, την ιερή κορυφή του Ψηλορείτη και τις απλωμένες κορυφογραμμές της Δίκτης τόσο καλά όσο τα μονοπάτια ανάμεσα στα χωριά μας. Κάθε διαδρομή που προσφέρουμε είναι μια διαδρομή που έχουμε περπατήσει σε κάθε εποχή, σε κάθε φως.</p>
+        <p class="about-body">Είμαστε άνθρωποι του βουνού. Γνωρίζουμε τα Λευκά Όρη, την ιερή κορυφή του Ψηλορείτη, τις απλωμένες κορυφογραμμές της Δίκτης και τα ηλιόλουστα Αστερούσια πάνω από το Λιβυκό Πέλαγος τόσο καλά όσο τα μονοπάτια ανάμεσα στα χωριά μας. Κάθε διαδρομή που προσφέρουμε είναι μια διαδρομή που έχουμε περπατήσει σε κάθε εποχή, σε κάθε φως.</p>
         <p class="about-body">Χωρίς συστήματα κρατήσεων. Χωρίς φόρμες. Απλώς επικοινωνήστε μαζί μας απευθείας στο Instagram, στο Facebook ή στο Viber, και θα σχεδιάσουμε μαζί την ορεινή σας εμπειρία, προσωπικά.</p>
         <div class="stat-row">
-          <div class="stat"><div class="num">3</div><div class="lbl">Οροσειρές</div></div>
+          <div class="stat"><div class="num">4</div><div class="lbl">Οροσειρές</div></div>
           <div class="stat"><div class="num">40+</div><div class="lbl">Επιλεγμένες διαδρομές</div></div>
           <div class="stat"><div class="num">4</div><div class="lbl">Εποχές δράσης</div></div>
         </div>
@@ -565,6 +568,12 @@
         <div class="weather-desc" id="wd-dikti"></div>
         <div class="weather-wind" id="ww-dikti"></div>
       </div>
+      <div class="weather-card reveal" style="transition-delay:.2s">
+        <div class="weather-peak">Αστερούσια - 1231μ</div>
+        <div class="weather-temp" id="wt-aster"><span style="font-size:1rem;color:var(--stone-dim)">Φόρτωση...</span></div>
+        <div class="weather-desc" id="wd-aster"></div>
+        <div class="weather-wind" id="ww-aster"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -575,7 +584,7 @@
     <div class="mountains-header reveal">
       <div>
         <p class="section-label">Οι Οροσειρές</p>
-        <h2 class="section-title">Τρεις κορυφές,<br/><em>ένα νησί</em></h2>
+        <h2 class="section-title">Τέσσερις κορυφές,<br/><em>ένα νησί</em></h2>
       </div>
       <p style="max-width:340px;font-size:.85rem;color:var(--stone-dim);line-height:1.75">Η Κρήτη κρύβει ορεινούς κόσμους που οι περισσότεροι επισκέπτες δεν φαντάζονται καν ότι υπάρχουν. Εμείς θα σας πάμε εκεί.</p>
     </div>
@@ -605,6 +614,15 @@
           <p class="card-alt">2148μ - Σπαθί</p>
           <h3 class="card-name">Δίκτη<br/>Οροσειρά Λασιθίου</h3>
           <p class="card-desc">Ο πράσινος γίγαντας της ανατολικής Κρήτης, που φιλοξενεί το Δικταίον Άντρον, την ιερή σπηλιά όπου ο θρύλος λέει ότι κρύφτηκε ο νεογέννητος Δίας από τον πατέρα του.</p>
+        </div>
+      </div>
+      <div class="mountain-card reveal" style="transition-delay:.3s">
+        <div class="card-photo" style="background-image:url('https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=800&q=80&fit=crop&auto=format')"></div>
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <p class="card-alt">1231μ - Κόφινας</p>
+          <h3 class="card-name">Αστερούσια<br/>Νότιο Ηράκλειο</h3>
+          <p class="card-desc">Η νοτιότερη οροσειρά της Ευρώπης, πάνω από το Λιβυκό Πέλαγος. Άγριες, ηλιόλουστες πλαγιές, το φαράγγι του Αγιοφάραγγου και απομονωμένα μοναστήρια κρυμμένα στην πέτρα.</p>
         </div>
       </div>
     </div>
@@ -704,6 +722,7 @@
         <div class="map-legend-item" onclick="flyToPeak('lefka', this)"><h4>Λευκά Όρη</h4><p>Δυτική Κρήτη. Το πιο άγριο και απομακρυσμένο. Τα φαράγγια της Σαμαριάς και της Ίμπρου διασχίζουν τις πλαγιές του. Πρόσβαση από τα Χανιά ή τη Χώρα Σφακίων.</p></div>
         <div class="map-legend-item" onclick="flyToPeak('psilo', this)"><h4>Ψηλορείτης</h4><p>Κεντρική Κρήτη. Το ψηλότερο βουνό της Κρήτης. Προσβάσιμο μέσω του Οροπεδίου Νίδας από το Ρέθυμνο. Η ιερή καρδιά του νησιού.</p></div>
         <div class="map-legend-item" onclick="flyToPeak('dikti', this)"><h4>Δίκτη</h4><p>Ανατολική Κρήτη. Πάνω από το Οροπέδιο Λασιθίου. Προσβάσιμο από το Ηράκλειο ή τον Άγιο Νικόλαο. Πιο πράσινο, πιο δασωμένο τοπίο.</p></div>
+        <div class="map-legend-item" onclick="flyToPeak('asterousia', this)"><h4>Αστερούσια</h4><p>Νότιο Ηράκλειο, πάνω από το Λιβυκό Πέλαγος. Η νοτιότερη οροσειρά της Ευρώπης. Πρόσβαση από τα Καπετανιανά και τα χωριά της Μεσαράς.</p></div>
       </div>
       <div class="reveal" style="transition-delay:.05s"><div id="the-map"></div></div>
     </div>
@@ -743,6 +762,7 @@
           <tr><td>Φαράγγι Σαμαριάς</td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-closed"></div></td><td><div class="dot dot-closed"></div></td></tr>
           <tr><td>Φαράγγι Ίμπρου</td><td><div class="dot dot-good"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td></tr>
           <tr><td>Οροσειρά Δίκτης</td><td><div class="dot dot-caution"></div></td><td><div class="dot dot-caution"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-caution"></div></td></tr>
+          <tr><td>Αστερούσια / Κόφινας</td><td><div class="dot dot-good"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-caution"></div></td><td><div class="dot dot-caution"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td></tr>
           <tr><td>Πεζοπορίες Ανατολής</td><td><div class="dot dot-caution"></div></td><td><div class="dot dot-caution"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-best"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-good"></div></td><td><div class="dot dot-caution"></div></td></tr>
         </tbody>
       </table>
@@ -967,6 +987,7 @@ async function fetchWeather(lat, lon, tid, did, wid) {
 fetchWeather(35.22, 24.75, 'wt-psilo', 'wd-psilo', 'ww-psilo');
 fetchWeather(35.33, 23.98, 'wt-lefka', 'wd-lefka', 'ww-lefka');
 fetchWeather(35.12, 25.47, 'wt-dikti', 'wd-dikti', 'ww-dikti');
+fetchWeather(34.96, 25.27, 'wt-aster', 'wd-aster', 'ww-aster');
 
 const map = L.map('the-map', { zoomControl: true, scrollWheelZoom: false }).setView([35.18, 24.8], 9);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: 'OpenStreetMap', maxZoom: 17 }).addTo(map);
@@ -974,7 +995,8 @@ const mkIcon = color => L.divIcon({ className:'', html:`<div style="width:12px;h
 const peaks = {
   psilo: L.marker([35.22,24.75], {icon: mkIcon('#c25830')}).bindPopup('<b>Ψηλορείτης</b><br/>2456μ - Η ψηλότερη κορυφή της Κρήτης').addTo(map),
   lefka: L.marker([35.33,23.98], {icon: mkIcon('#c25830')}).bindPopup('<b>Λευκά Όρη - Πάχνες</b><br/>2453μ - Λευκά Όρη').addTo(map),
-  dikti: L.marker([35.12,25.47], {icon: mkIcon('#c25830')}).bindPopup('<b>Δίκτη - Σπαθί</b><br/>2148μ - Οροσειρά Λασιθίου').addTo(map)
+  dikti: L.marker([35.12,25.47], {icon: mkIcon('#c25830')}).bindPopup('<b>Δίκτη - Σπαθί</b><br/>2148μ - Οροσειρά Λασιθίου').addTo(map),
+  asterousia: L.marker([34.96,25.27], {icon: mkIcon('#c25830')}).bindPopup('<b>Αστερούσια - Κόφινας</b><br/>1231μ - Νότιο Ηράκλειο').addTo(map)
 };
 L.marker([35.32,23.97], {icon: mkIcon('#6b7c5a')}).bindPopup('<b>Είσοδος Φαραγγιού Σαμαριάς</b><br/>Ομαλός - σημείο εκκίνησης').addTo(map);
 L.marker([35.27,24.0],  {icon: mkIcon('#6b7c5a')}).bindPopup('<b>Φαράγγι Ίμπρου</b><br/>Άνω είσοδος στο χωριό Ίμπρος').addTo(map);
