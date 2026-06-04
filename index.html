@@ -1047,22 +1047,28 @@ let activePeak = null;
 function flyToPeak(key, el) {
   const marker = peaks[key];
   if (!marker) return;
-  // On mobile the legend sits above the map, so bring the map into view to watch the zoom.
-  if (window.matchMedia('(max-width: 900px)').matches) {
-    document.getElementById('the-map').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
+  const isMobile = window.matchMedia('(max-width: 900px)').matches;
+  const toggleOff = (activePeak === key);
   document.querySelectorAll('.map-legend-item.active').forEach(i => i.classList.remove('active'));
-  // Second click on the same mountain: zoom back out to the full map
-  if (activePeak === key) {
-    activePeak = null;
-    map.closePopup();
-    map.flyTo(defaultMapView.center, defaultMapView.zoom, { duration: 1.4 });
-    return;
+  if (!toggleOff && el) el.classList.add('active'); // immediate highlight feedback
+  const run = () => {
+    if (toggleOff) { // second tap on same mountain: zoom back out
+      activePeak = null;
+      map.closePopup();
+      map.flyTo(defaultMapView.center, defaultMapView.zoom, { duration: 1.4 });
+      return;
+    }
+    activePeak = key;
+    map.flyTo(marker.getLatLng(), 12, { duration: 1.4 });
+    map.once('moveend', () => marker.openPopup());
+  };
+  // On mobile the legend sits above the map: scroll to the map FIRST, then run the zoom so the full smooth animation is visible.
+  if (isMobile) {
+    document.getElementById('the-map').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(run, 600);
+  } else {
+    run();
   }
-  activePeak = key;
-  if (el) el.classList.add('active');
-  map.flyTo(marker.getLatLng(), 12, { duration: 1.4 });
-  map.once('moveend', () => marker.openPopup());
 }
 
 function toggleFaq(btn) {
