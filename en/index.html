@@ -227,7 +227,7 @@
     .season-table th { font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--stone-dim); padding: .75rem .4rem; border-bottom: 1px solid rgba(107,124,90,.2); text-align: center; }
     .season-table th:first-child { text-align: left; }
     .season-table td { padding: .7rem .4rem; font-size: .78rem; color: var(--stone-dim); border-bottom: 1px solid rgba(107,124,90,.08); text-align: center; vertical-align: middle; }
-    .season-table td:first-child { font-family: 'EB Garamond', serif; font-size: .95rem; color: var(--white); padding-right: 1rem; white-space: nowrap; text-align: left; }
+    .season-table td:first-child { font-family: 'EB Garamond', serif; font-size: 1.12rem; font-weight: 500; color: var(--white); padding-right: 1rem; white-space: nowrap; text-align: left; }
     .dot { vertical-align: middle; }
     .dot { display: inline-block; width: 26px; height: 26px; border-radius: 50%; }
     .dot-best { background: #6f8a4f; }
@@ -278,7 +278,7 @@
     .gallery-lbl { position: absolute; bottom: 1rem; left: 1rem; font-size: .67rem; letter-spacing: .12em; color: var(--stone-dim); text-transform: uppercase; }
 
     #testimonials { padding: 8rem 0; background: var(--surface); }
-    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .testi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3rem; }
     .testi-card { background: var(--surface-2); padding: 2rem; border-top: 2px solid transparent; transition: border-color .3s; }
     .testi-card:hover { border-color: var(--terracotta); }
     .testi-stars { color: var(--terracotta); font-size: .9rem; margin-bottom: 1rem; letter-spacing: .15em; }
@@ -378,6 +378,7 @@
       .flora-grid { grid-template-columns: repeat(2, 1fr); }
       .mountain-cards { grid-template-columns: repeat(2, 1fr); }
       .weather-grid { grid-template-columns: repeat(2, 1fr); }
+      .testi-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 900px) {
       .nav-links, .nav-social { display: none; }
@@ -883,6 +884,7 @@
       <div class="testi-card reveal"><div class="testi-stars">* * * * *</div><div class="testi-text">"The Psiloritis summit at sunrise is something I will never forget. Our guide knew every rock, every shortcut, every story. We felt completely safe and completely alive."</div><div class="testi-author">Maria K. - Netherlands</div><div class="testi-route">Psiloritis Summit</div></div>
       <div class="testi-card reveal" style="transition-delay:.1s"><div class="testi-stars">* * * * *</div><div class="testi-text">"We did the Pachnes traverse over two days and it was the hardest, most beautiful thing I have ever done. The shelter, the silence, the stars. Absolutely otherworldly."</div><div class="testi-author">Thomas B. - Germany</div><div class="testi-route">Lefka Ori Multi-Day</div></div>
       <div class="testi-card reveal" style="transition-delay:.2s"><div class="testi-stars">* * * * *</div><div class="testi-text">"I am not a serious hiker but the Imbros Gorge was perfect for me. Short, stunning, and our guide made it feel like an adventure even for a beginner. Highly recommended."</div><div class="testi-author">Sophie R. - France</div><div class="testi-route">Imbros Gorge</div></div>
+      <div class="testi-card reveal" style="transition-delay:.3s"><div class="testi-stars">* * * * *</div><div class="testi-text">"Walking the Asterousia up to Kofinas was magical. Sunshine, sweeping views over the Libyan Sea, and total peace. Gentle enough that even our kids loved it."</div><div class="testi-author">Nikos P. - Greece</div><div class="testi-route">Asterousia - Kofinas</div></div>
     </div>
   </div>
 </section>
@@ -986,7 +988,7 @@ async function fetchWeather(lat, lon, tid, did, wid) {
 fetchWeather(35.22, 24.75, 'wt-psilo', 'wd-psilo', 'ww-psilo');
 fetchWeather(35.33, 23.98, 'wt-lefka', 'wd-lefka', 'ww-lefka');
 fetchWeather(35.12, 25.47, 'wt-dikti', 'wd-dikti', 'ww-dikti');
-fetchWeather(34.96, 25.27, 'wt-aster', 'wd-aster', 'ww-aster');
+fetchWeather(34.99, 25.16, 'wt-aster', 'wd-aster', 'ww-aster');
 
 const map = L.map('the-map', { zoomControl: true, scrollWheelZoom: false }).setView([35.18, 24.8], 9);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: 'OpenStreetMap', maxZoom: 17 }).addTo(map);
@@ -995,7 +997,7 @@ const peaks = {
   psilo: L.marker([35.22,24.75], {icon: mkIcon('#c25830')}).bindPopup('<b>Psiloritis</b><br/>2456m - Highest peak in Crete').addTo(map),
   lefka: L.marker([35.33,23.98], {icon: mkIcon('#c25830')}).bindPopup('<b>Lefka Ori - Pachnes</b><br/>2453m - White Mountains').addTo(map),
   dikti: L.marker([35.12,25.47], {icon: mkIcon('#c25830')}).bindPopup('<b>Dikti - Spathi</b><br/>2148m - Lasithi Range').addTo(map),
-  asterousia: L.marker([34.96,25.27], {icon: mkIcon('#c25830')}).bindPopup('<b>Asterousia - Kofinas</b><br/>1231m - Southern Heraklion').addTo(map)
+  asterousia: L.marker([34.99,25.16], {icon: mkIcon('#c25830')}).bindPopup('<b>Asterousia - Kofinas</b><br/>1231m - Southern Heraklion').addTo(map)
 };
 L.marker([35.32,23.97], {icon: mkIcon('#6b7c5a')}).bindPopup('<b>Samaria Gorge Entrance</b><br/>Omalos - start point').addTo(map);
 L.marker([35.27,24.0],  {icon: mkIcon('#6b7c5a')}).bindPopup('<b>Imbros Gorge</b><br/>Upper entrance at Imbros village').addTo(map);
