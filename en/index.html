@@ -1046,6 +1046,10 @@ let activePeak = null;
 function flyToPeak(key, el) {
   const marker = peaks[key];
   if (!marker) return;
+  // On mobile the legend sits above the map, so bring the map into view to watch the zoom.
+  if (window.matchMedia('(max-width: 900px)').matches) {
+    document.getElementById('the-map').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
   document.querySelectorAll('.map-legend-item.active').forEach(i => i.classList.remove('active'));
   // Second click on the same mountain: zoom back out to the full map
   if (activePeak === key) {
