@@ -9,21 +9,24 @@
   <meta name="color-scheme" content="only light"/>
 
   <!-- Favicon (your logo) -->
-  <link rel="icon" type="image/png" href="/logo.png"/>
-  <link rel="apple-touch-icon" href="/logo.png"/>
+  <link rel="icon" type="image/png" href="/favicon.png"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
 
   <!-- Open Graph (link preview on Facebook, Instagram, Viber, WhatsApp) -->
   <meta property="og:type" content="website"/>
   <meta property="og:title" content="The Wild Goat - Mountain Experiences in Crete"/>
   <meta property="og:description" content="Guided mountain experiences in Crete. Summits, gorges and sunrise hikes across the White Mountains, Psiloritis and Dikti."/>
-  <meta property="og:image" content="/logo.png"/>
+  <meta property="og:image" content="/share.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="The Wild Goat logo - Mountain experiences in Crete"/>
   <meta property="og:locale" content="en_GB"/>
 
   <!-- Twitter / X card -->
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="The Wild Goat - Mountain Experiences in Crete"/>
   <meta name="twitter:description" content="Guided mountain experiences in Crete. Summits, gorges and sunrise hikes across the White Mountains, Psiloritis and Dikti."/>
-  <meta name="twitter:image" content="/logo.png"/>
+  <meta name="twitter:image" content="/share.png"/>
 
   <!-- Local SEO: geo tags -->
   <meta name="geo.region" content="GR-M"/>
@@ -338,7 +341,11 @@
     nav:not(.scrolled) .nav-links a.active { color: var(--accent-bright); }
     nav:not(.scrolled) .nav-links a::after { background: var(--accent-bright); }
     .mobile-bottom-bar a.active { color: var(--terracotta); }
-    @media (prefers-reduced-motion: reduce) { .nav-links a::after { transition: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
 
     /* Stronger gradient so mountain-card labels stay readable */
     .card-overlay { background: linear-gradient(to top, rgba(11,16,13,.97) 0%, rgba(11,16,13,.82) 42%, rgba(11,16,13,.35) 72%, transparent 100%); }
@@ -486,12 +493,45 @@
     .fm-desc { font-size: .95rem; color: var(--stone-dim); line-height: 1.7; }
     .fm-close { position: fixed; top: 4vh; right: 5vw; background: rgba(11,16,13,.55); border: 1px solid rgba(240,236,226,.25); color: #f0ece2; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; transition: background .3s, border-color .3s; }
     .fm-close:hover { background: var(--terracotta); border-color: var(--terracotta); }
+
+    /* Route cards: tap to open full trip details */
+    .route-card { cursor: pointer; }
+    .route-more { display: block; margin-top: 1.1rem; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--terracotta); font-weight: 600; }
+    .route-modal { position: fixed; inset: 0; z-index: 330; background: rgba(7,10,8,.82); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: flex-start; justify-content: center; padding: 4vh 1.2rem; opacity: 0; pointer-events: none; transition: opacity .3s ease; overflow-y: auto; }
+    .route-modal.open { opacity: 1; pointer-events: auto; }
+    .rm-card { background: #fffef8; max-width: 620px; width: 100%; border-radius: 6px; overflow: hidden; box-shadow: 0 30px 70px rgba(0,0,0,.5); transform: translateY(16px); transition: transform .3s ease; margin: auto 0; }
+    .route-modal.open .rm-card { transform: none; }
+    .rm-photo { position: relative; width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: #ece2cf; }
+    .rm-diff { position: absolute; top: 1rem; left: 1rem; font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; padding: .32rem .8rem; color: #fff; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
+    .rm-diff.diff-easy { background: #5d6e47; }
+    .rm-diff.diff-moderate { background: #9c7a22; }
+    .rm-diff.diff-hard { background: #be541f; }
+    .rm-diff.diff-vhard { background: #a8331a; }
+    .rm-body { padding: 1.8rem; }
+    .rm-name { font-family: 'EB Garamond', serif; font-weight: 500; font-size: 1.7rem; line-height: 1.15; color: var(--stone); margin-bottom: .9rem; }
+    .rm-stats { display: flex; flex-wrap: wrap; gap: 1.3rem; padding-bottom: 1.1rem; margin-bottom: 1.1rem; border-bottom: 1px solid rgba(120,90,50,.16); }
+    .rm-stats span { display: inline-flex; align-items: center; gap: .4rem; font-size: .85rem; color: var(--stone-dim); }
+    .rm-stats svg { color: var(--terracotta); flex-shrink: 0; }
+    .rm-desc { font-size: .95rem; line-height: 1.75; color: var(--stone-dim); margin-bottom: 1.5rem; }
+    .rm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem 1.5rem; margin-bottom: 1.6rem; }
+    .rm-label { font-size: .58rem; letter-spacing: .18em; text-transform: uppercase; color: var(--terracotta); font-weight: 600; margin-bottom: .35rem; }
+    .rm-val { font-size: .9rem; color: var(--stone); line-height: 1.45; }
+    .rm-price { font-family: 'EB Garamond', serif; font-size: 1.3rem; color: var(--terracotta); }
+    .rm-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.7rem; }
+    .rm-cols ul { list-style: none; }
+    .rm-cols li { position: relative; padding-left: 1.1rem; font-size: .86rem; color: var(--stone-dim); line-height: 1.5; margin-bottom: .45rem; }
+    .rm-cols li::before { content: ''; position: absolute; left: 0; top: .55em; width: 6px; height: 6px; border-radius: 50%; background: var(--sage); }
+    .rm-cta { display: block; text-align: center; background: var(--terracotta); color: #fff; padding: .95rem; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; text-decoration: none; transition: background .3s; }
+    .rm-cta:hover { background: #a8481a; }
+    .rm-close { position: fixed; top: 3vh; right: 4vw; background: rgba(11,16,13,.55); border: 1px solid rgba(240,236,226,.25); color: #f0ece2; width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; transition: background .3s; }
+    .rm-close:hover { background: var(--terracotta); }
+    @media (max-width: 540px) { .rm-grid, .rm-cols { grid-template-columns: 1fr; } .rm-name { font-size: 1.45rem; } .rm-body { padding: 1.4rem; } }
   </style>
 </head>
 <body>
 
 <nav id="navbar">
-  <a class="nav-logo" href="#"><img src="/logo.png" alt="The Wild Goat logo"/>The <span>Wild</span> Goat</a>
+  <a class="nav-logo" href="#"><img src="/logo-256.png" alt="The Wild Goat logo"/>The <span>Wild</span> Goat</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#mountains">Mountains</a></li>
@@ -514,7 +554,7 @@
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <img class="mm-logo" src="/logo.png" alt="The Wild Goat logo"/>
+  <img class="mm-logo" src="/logo-256.png" alt="The Wild Goat logo"/>
   <a href="#about" onclick="closeMobile()">About</a>
   <a href="#mountains" onclick="closeMobile()">Mountains</a>
   <a href="#routes" onclick="closeMobile()">Routes</a>
@@ -996,7 +1036,7 @@
 </section>
 
 <footer>
-  <div class="footer-brand"><img src="/logo.png" alt="The Wild Goat logo"/>The <span>Wild</span> Goat</div>
+  <div class="footer-brand"><img src="/logo-256.png" alt="The Wild Goat logo"/>The <span>Wild</span> Goat</div>
   <div class="footer-center"><div style="margin-bottom:.35rem">Mountain Experiences - Crete, Greece</div><div style="font-size:.8rem;opacity:.55">2026 The Wild Goat - All rights reserved</div></div>
   <div class="footer-links">
     <a href="https://www.instagram.com/thewildgoat" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
@@ -1034,10 +1074,50 @@
   </div>
 </div>
 
+<div class="route-modal" id="routeModal" role="dialog" aria-label="Route details" aria-hidden="true">
+  <button class="rm-close" id="rmClose" aria-label="Close"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  <div class="rm-card">
+    <div class="rm-photo" id="rmPhoto"><span class="rm-diff" id="rmDiff"></span></div>
+    <div class="rm-body">
+      <h3 class="rm-name" id="rmName"></h3>
+      <div class="rm-stats" id="rmStats"></div>
+      <p class="rm-desc" id="rmDesc"></p>
+      <div class="rm-grid">
+        <div><div class="rm-label">Meeting point</div><div class="rm-val" id="rmMeet"></div></div>
+        <div><div class="rm-label">Group size</div><div class="rm-val" id="rmGroup"></div></div>
+        <div><div class="rm-label">Best season</div><div class="rm-val" id="rmSeason"></div></div>
+        <div><div class="rm-label">Price</div><div class="rm-val rm-price" id="rmPrice"></div></div>
+      </div>
+      <div class="rm-cols">
+        <div><div class="rm-label">What's included</div><ul id="rmIncluded"></ul></div>
+        <div><div class="rm-label">What to bring</div><ul id="rmBring"></ul></div>
+      </div>
+      <a class="rm-cta" id="rmCta" href="#contact">Book · Ask us →</a>
+    </div>
+  </div>
+</div>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
+const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Lazy-load below-the-fold CSS background images (gallery, mountain & flora cards)
+(function () {
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      if (el.dataset.bg) { el.style.backgroundImage = "url('" + el.dataset.bg + "')"; el.removeAttribute('data-bg'); }
+      obs.unobserve(el);
+    });
+  }, { rootMargin: '400px 0px' });
+  document.querySelectorAll('.gallery-photo, .card-photo, .flora-photo').forEach(el => {
+    const m = (el.style.backgroundImage || '').match(/url\(["']?(.*?)["']?\)/);
+    if (m && m[1]) { el.dataset.bg = m[1]; el.style.backgroundImage = 'none'; io.observe(el); }
+  });
+})();
 
 const heroPhoto = document.getElementById('heroPhoto');
 window.addEventListener('scroll', () => {
@@ -1101,17 +1181,18 @@ function flyToPeak(key, el) {
     if (toggleOff) { // second tap on same mountain: zoom back out
       activePeak = null;
       map.closePopup();
-      map.flyTo(defaultMapView.center, defaultMapView.zoom, { duration: 1.4 });
+      if (prefersReduce) map.setView(defaultMapView.center, defaultMapView.zoom);
+      else map.flyTo(defaultMapView.center, defaultMapView.zoom, { duration: 1.4 });
       return;
     }
     activePeak = key;
-    map.flyTo(marker.getLatLng(), 12, { duration: 1.4 });
-    map.once('moveend', () => marker.openPopup());
+    if (prefersReduce) { map.setView(marker.getLatLng(), 12); marker.openPopup(); }
+    else { map.flyTo(marker.getLatLng(), 12, { duration: 1.4 }); map.once('moveend', () => marker.openPopup()); }
   };
   // On mobile the legend sits above the map: scroll to the map FIRST, then run the zoom so the full smooth animation is visible.
   if (isMobile) {
-    document.getElementById('the-map').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(run, 600);
+    document.getElementById('the-map').scrollIntoView({ behavior: prefersReduce ? 'auto' : 'smooth', block: 'center' });
+    setTimeout(run, prefersReduce ? 50 : 600);
   } else {
     run();
   }
@@ -1224,7 +1305,7 @@ function lbSlide(delta) { // delta: -1 prev, +1 next, 0 snap back
     if (delta) lbIndex = lbWrap(lbIndex + delta);
     renderSlides();
     lbAnimating = false;
-  }, 420);
+  }, prefersReduce ? 20 : 420);
 }
 function openLightbox(cell) {
   lbIndex = galleryItems.indexOf(cell);
@@ -1278,7 +1359,8 @@ lbStage.addEventListener('touchend', () => {
 // --- FLORA MODAL: tap a card to read the full story ---
 const floraModal = document.getElementById('floraModal');
 function openFlora(card) {
-  document.getElementById('fmPhoto').style.backgroundImage = card.querySelector('.flora-photo').style.backgroundImage;
+  const ph = card.querySelector('.flora-photo');
+  document.getElementById('fmPhoto').style.backgroundImage = ph.dataset.bg ? "url('" + ph.dataset.bg + "')" : ph.style.backgroundImage;
   document.getElementById('fmType').textContent = card.querySelector('.flora-type').textContent;
   document.getElementById('fmName').textContent = card.querySelector('.flora-name').textContent;
   document.getElementById('fmLatin').textContent = card.querySelector('.flora-latin').textContent;
@@ -1305,7 +1387,8 @@ document.querySelectorAll('.flora-card').forEach(card => {
 });
 // Mountain cards reuse the same zoom modal for the full story
 function openMountain(card) {
-  document.getElementById('fmPhoto').style.backgroundImage = card.querySelector('.card-photo').style.backgroundImage;
+  const ph = card.querySelector('.card-photo');
+  document.getElementById('fmPhoto').style.backgroundImage = ph.dataset.bg ? "url('" + ph.dataset.bg + "')" : ph.style.backgroundImage;
   document.getElementById('fmType').textContent = card.querySelector('.card-alt').textContent;
   const parts = card.querySelector('.card-name').innerHTML.split(/<br\s*\/?>/i);
   document.getElementById('fmName').textContent = parts[0].replace(/<[^>]+>/g, '').trim();
@@ -1329,6 +1412,113 @@ document.querySelectorAll('.mountain-card').forEach(card => {
 document.getElementById('fmClose').addEventListener('click', closeFlora);
 floraModal.addEventListener('click', e => { if (e.target === floraModal) closeFlora(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && floraModal.classList.contains('open')) closeFlora(); });
+
+// --- ROUTE MODAL: full trip details ---
+const routeData = [
+  { photo:'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1000&q=80&fit=crop&auto=format', meet:'Nida Plateau, Anogeia — parking at 1,400m', group:'2 - 8 people', price:'from €75 / person',
+    included:['Certified mountain guide','Transfer to/from the meeting point','Liability insurance','Water and energy snack'],
+    bring:['Hiking boots','Hat, sunglasses & sunscreen','2L of water','Windproof jacket','Trekking poles (optional)'] },
+  { photo:'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1000&q=80&fit=crop&auto=format', meet:'Omalos (Xyloskalo) — gorge entrance', group:'2 - 12 people', price:'from €70 / person',
+    included:['Certified mountain guide','Transfer to/from the meeting point','Boat ticket Agia Roumeli → Chora Sfakion','Liability insurance'],
+    bring:['Hiking boots','Hat, sunglasses & sunscreen','2L of water','Swimsuit & towel','Personal snacks'] },
+  { photo:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1000&q=80&fit=crop&auto=format', meet:'Imbros village square (Sfakia)', group:'2 - 10 people', price:'from €45 / person',
+    included:['Certified mountain guide','Transfer to/from the meeting point','Liability insurance','Water'],
+    bring:['Trainers or hiking shoes','Hat & sunscreen','1.5L of water','Personal snacks'] },
+  { photo:'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1000&q=80&fit=crop&auto=format', meet:'Anopoli, Sfakia — 4x4 transfer to Katsiveli', group:'2 - 6 people', price:'from €95 / person',
+    included:['Certified mountain guide','4x4 transfer to/from the trailhead','Liability insurance','Water and energy snack'],
+    bring:['Hiking boots','Trekking poles','3L of water','Warm & windproof layer','Head torch','Personal snacks'] },
+  { photo:'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1000&q=80&fit=crop&auto=format', meet:'Agia Irini village — gorge entrance', group:'2 - 10 people', price:'from €45 / person',
+    included:['Certified mountain guide','Transfer to/from the meeting point','Liability insurance','Water'],
+    bring:['Trainers or hiking shoes','Hat & sunscreen','1.5L of water','Personal snacks'] },
+  { photo:'https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=1000&q=80&fit=crop&auto=format', meet:'Lasithi Plateau, Psychro — Dikteon Cave', group:'2 - 8 people', price:'from €75 / person',
+    included:['Certified mountain guide','Transfer to/from the meeting point','Liability insurance','Water and energy snack'],
+    bring:['Hiking boots','Hat, sunglasses & sunscreen','2L of water','Windproof jacket','Trekking poles (optional)'] },
+  { photo:'https://images.unsplash.com/photo-1551632811-561732d1e306?w=1000&q=80&fit=crop&auto=format', meet:'Kapetaniana — main square', group:'2 - 8 people', price:'from €70 / person',
+    included:['Certified mountain guide','Transfer to/from the meeting point','Liability insurance','Water and energy snack'],
+    bring:['Hiking boots','Hat, sunglasses & sunscreen','2L of water','Windproof jacket'] },
+  { photo:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1000&q=80&fit=crop&auto=format', meet:'Odigitria Monastery — car park', group:'2 - 12 people', price:'from €40 / person',
+    included:['Certified mountain guide','Transfer to/from the meeting point','Liability insurance','Water'],
+    bring:['Trainers or hiking shoes','Hat & sunscreen','1.5L of water','Swimsuit & towel'] },
+  { photo:'https://images.unsplash.com/photo-1448375240586-882707db888b?w=1000&q=80&fit=crop&auto=format', meet:'Lake Zaros (Votomos) — trailhead', group:'2 - 10 people', price:'from €55 / person',
+    included:['Certified mountain guide','Transfer to/from the meeting point','Liability insurance','Water'],
+    bring:['Hiking shoes','Hat & sunscreen','1.5L of water','Personal snacks'] }
+];
+const routeModal = document.getElementById('routeModal');
+function openRoute(card, data) {
+  if (!data) return;
+  const diffEl = card.querySelector('.route-difficulty');
+  const rmDiff = document.getElementById('rmDiff');
+  rmDiff.textContent = diffEl ? diffEl.textContent : '';
+  rmDiff.className = 'rm-diff ' + (diffEl ? [...diffEl.classList].filter(c => c.indexOf('diff-') === 0).join(' ') : '');
+  document.getElementById('rmPhoto').style.backgroundImage = "url('" + data.photo + "')";
+  document.getElementById('rmName').textContent = card.querySelector('.route-name').textContent;
+  document.getElementById('rmStats').innerHTML = card.querySelector('.route-meta').innerHTML;
+  document.getElementById('rmDesc').textContent = card.querySelector('.route-desc').textContent;
+  const seasonEl = card.querySelector('.route-season');
+  document.getElementById('rmSeason').textContent = seasonEl ? (seasonEl.textContent.split(':').slice(1).join(':').trim() || seasonEl.textContent) : '';
+  document.getElementById('rmMeet').textContent = data.meet;
+  document.getElementById('rmGroup').textContent = data.group;
+  document.getElementById('rmPrice').textContent = data.price;
+  document.getElementById('rmIncluded').innerHTML = data.included.map(x => '<li>' + x + '</li>').join('');
+  document.getElementById('rmBring').innerHTML = data.bring.map(x => '<li>' + x + '</li>').join('');
+  routeModal.scrollTop = 0;
+  routeModal.classList.add('open');
+  routeModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+function closeRoute() {
+  routeModal.classList.remove('open');
+  routeModal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.route-card').forEach((card, i) => {
+  const more = document.createElement('span');
+  more.className = 'route-more';
+  more.textContent = 'View details →';
+  card.appendChild(more);
+  card.setAttribute('role', 'button');
+  card.setAttribute('tabindex', '0');
+  card.addEventListener('click', () => openRoute(card, routeData[i]));
+  card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openRoute(card, routeData[i]); } });
+});
+document.getElementById('rmClose').addEventListener('click', closeRoute);
+document.getElementById('rmCta').addEventListener('click', closeRoute);
+routeModal.addEventListener('click', e => { if (e.target === routeModal) closeRoute(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && routeModal.classList.contains('open')) closeRoute(); });
+
+// --- Keyboard accessibility: operable tiles + dialog focus management ---
+(function () {
+  document.querySelectorAll('.map-legend-item, #galleryGrid .gallery-cell').forEach(el => {
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); } });
+  });
+  const dialogs = [document.getElementById('floraModal'), document.getElementById('routeModal'), document.getElementById('lightbox')].filter(Boolean);
+  const focusablesIn = m => [...m.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])')].filter(el => el.offsetParent !== null);
+  dialogs.forEach(modal => {
+    let opener = null;
+    new MutationObserver(() => {
+      if (modal.classList.contains('open')) {
+        opener = opener || document.activeElement;
+        const f = focusablesIn(modal);
+        if (f[0]) f[0].focus({ preventScroll: true });
+      } else if (opener) {
+        if (opener.focus) opener.focus({ preventScroll: true });
+        opener = null;
+      }
+    }).observe(modal, { attributes: true, attributeFilter: ['class'] });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Tab') return;
+    const modal = dialogs.find(m => m.classList.contains('open'));
+    if (!modal) return;
+    const f = focusablesIn(modal);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus({ preventScroll: true }); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus({ preventScroll: true }); }
+  });
+})();
 </script>
 </body>
 </html>
