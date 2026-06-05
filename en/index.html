@@ -1092,7 +1092,7 @@
         <div><div class="rm-label">What's included</div><ul id="rmIncluded"></ul></div>
         <div><div class="rm-label">What to bring</div><ul id="rmBring"></ul></div>
       </div>
-      <a class="rm-cta" id="rmCta" href="#contact">Book · Ask us →</a>
+      <a class="rm-cta" id="rmCta" href="#contact">Book · Ask us</a>
     </div>
   </div>
 </div>
@@ -1377,7 +1377,7 @@ function closeFlora() {
 document.querySelectorAll('.flora-card').forEach(card => {
   const more = document.createElement('span');
   more.className = 'flora-more';
-  more.textContent = 'Read more →';
+  more.textContent = 'Read more';
   const content = card.querySelector('.flora-content');
   if (content) content.appendChild(more);
   card.setAttribute('role', 'button');
@@ -1401,7 +1401,7 @@ function openMountain(card) {
 document.querySelectorAll('.mountain-card').forEach(card => {
   const more = document.createElement('span');
   more.className = 'card-more';
-  more.textContent = 'Read more →';
+  more.textContent = 'Read more';
   const content = card.querySelector('.card-content');
   if (content) content.appendChild(more);
   card.setAttribute('role', 'button');
@@ -1474,7 +1474,7 @@ function closeRoute() {
 document.querySelectorAll('.route-card').forEach((card, i) => {
   const more = document.createElement('span');
   more.className = 'route-more';
-  more.textContent = 'View details →';
+  more.textContent = 'View details';
   card.appendChild(more);
   card.setAttribute('role', 'button');
   card.setAttribute('tabindex', '0');
