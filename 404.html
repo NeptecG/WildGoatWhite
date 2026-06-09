@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" href="/favicon.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Commissioner:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -26,16 +26,16 @@
       min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center;
       text-align: center; padding: 2.5rem 1.5rem; overflow-x: hidden;
     }
-    .logo { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; box-shadow: 0 6px 22px rgba(80,55,25,.22); margin-bottom: 1.75rem; }
+    .logo { width: 92px; height: 92px; object-fit: contain; box-shadow: 0 6px 22px rgba(80,55,25,.22); margin-bottom: 1.75rem; }
     .eyebrow { font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: var(--terracotta); font-weight: 600; margin-bottom: 1.1rem; }
     .code {
-      font-family: 'EB Garamond', serif; font-weight: 500; line-height: 1;
+      font-family: 'Commissioner', sans-serif; font-weight: 500; line-height: 1;
       font-size: clamp(5rem, 21vw, 10.5rem); color: var(--white);
       letter-spacing: .02em; margin-bottom: .6rem;
       font-variant-numeric: lining-nums tabular-nums; font-feature-settings: "lnum" 1, "tnum" 1;
     }
     .code em { font-style: italic; color: var(--terracotta); }
-    h1 { font-family: 'EB Garamond', serif; font-weight: 400; font-size: clamp(1.8rem, 5vw, 2.8rem); color: var(--white); line-height: 1.15; margin-bottom: 1rem; }
+    h1 { font-family: 'Commissioner', sans-serif; font-weight: 400; font-size: clamp(1.8rem, 5vw, 2.8rem); color: var(--white); line-height: 1.15; margin-bottom: 1rem; }
     p.lead { font-size: .95rem; color: var(--stone-dim); line-height: 1.7; max-width: 470px; margin: 0 auto 2.5rem; }
     .actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
     .btn {
