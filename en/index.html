@@ -160,7 +160,7 @@
     .stat .num { font-family: 'EB Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--white); line-height: 1; font-variant-numeric: lining-nums tabular-nums; font-feature-settings: "lnum" 1, "tnum" 1; }
     .stat .lbl { font-size: .7rem; letter-spacing: .1em; color: var(--stone-dim); }
 
-    #weather { padding: 5rem 0; background: var(--surface); }
+    #weather { padding: 5rem 0; background: var(--bg); }
     .weather-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3rem; }
     .weather-card { background: var(--surface); border: 1px solid rgba(107,124,90,.15); padding: 2rem; text-align: center; }
     .weather-peak { font-size: .65rem; letter-spacing: .25em; text-transform: uppercase; color: var(--terracotta); margin-bottom: .75rem; }
@@ -200,7 +200,7 @@
     .route-desc { font-size: .86rem; font-weight: 400; color: var(--stone-dim); line-height: 1.7; }
     .route-season { margin-top: 1rem; font-size: .65rem; letter-spacing: .1em; color: var(--sage-light); }
 
-    #map-section { padding: 8rem 0; background: var(--bg); }
+    #map-section { padding: 8rem 0; background: var(--surface); }
     .map-wrap { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: stretch; margin-top: 3rem; }
     #the-map { height: 100%; min-height: 520px; border: 1px solid rgba(107,124,90,.2); position: relative; z-index: 1; }
     .map-legend { display: flex; flex-direction: column; gap: 1.5rem; }
@@ -817,6 +817,25 @@
   </div>
 </section>
 
+<!-- MAP -->
+<section id="map-section">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">The Terrain</p>
+      <h2 class="section-title">Find your<br/><em>mountain</em></h2>
+    </div>
+    <div class="map-wrap">
+      <div class="map-legend reveal" style="transition-delay:.1s">
+        <div class="map-legend-item" onclick="flyToPeak('lefka', this)"><h4>Lefka Ori</h4><p>Western Crete. Wildest and most remote. The Samaria and Imbros gorges cut through its flanks. Accessed from Chania or Hora Sfakion.</p></div>
+        <div class="map-legend-item" onclick="flyToPeak('psilo', this)"><h4>Psiloritis</h4><p>Central Crete. Crete's highest mountain. Reached via the Nida Plateau from Rethymno. The sacred heart of the island.</p></div>
+        <div class="map-legend-item" onclick="flyToPeak('dikti', this)"><h4>Dikti</h4><p>Eastern Crete. Above the Lasithi Plateau. Accessible from Heraklion or Agios Nikolaos. Greener, more forested terrain.</p></div>
+        <div class="map-legend-item" onclick="flyToPeak('asterousia', this)"><h4>Asterousia</h4><p>Southern Heraklion, above the Libyan Sea. Europe's southernmost mountain range. Reached from Kapetaniana and the villages of the Messara plain.</p></div>
+      </div>
+      <div class="reveal" style="transition-delay:.05s"><div id="the-map"></div></div>
+    </div>
+  </div>
+</section>
+
 <!-- WEATHER -->
 <section id="weather">
   <div class="container">
@@ -849,25 +868,6 @@
         <div class="weather-desc" id="wd-aster"></div>
         <div class="weather-wind" id="ww-aster"></div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- MAP -->
-<section id="map-section">
-  <div class="container">
-    <div class="reveal">
-      <p class="section-label">The Terrain</p>
-      <h2 class="section-title">Find your<br/><em>mountain</em></h2>
-    </div>
-    <div class="map-wrap">
-      <div class="map-legend reveal" style="transition-delay:.1s">
-        <div class="map-legend-item" onclick="flyToPeak('lefka', this)"><h4>Lefka Ori</h4><p>Western Crete. Wildest and most remote. The Samaria and Imbros gorges cut through its flanks. Accessed from Chania or Hora Sfakion.</p></div>
-        <div class="map-legend-item" onclick="flyToPeak('psilo', this)"><h4>Psiloritis</h4><p>Central Crete. Crete's highest mountain. Reached via the Nida Plateau from Rethymno. The sacred heart of the island.</p></div>
-        <div class="map-legend-item" onclick="flyToPeak('dikti', this)"><h4>Dikti</h4><p>Eastern Crete. Above the Lasithi Plateau. Accessible from Heraklion or Agios Nikolaos. Greener, more forested terrain.</p></div>
-        <div class="map-legend-item" onclick="flyToPeak('asterousia', this)"><h4>Asterousia</h4><p>Southern Heraklion, above the Libyan Sea. Europe's southernmost mountain range. Reached from Kapetaniana and the villages of the Messara plain.</p></div>
-      </div>
-      <div class="reveal" style="transition-delay:.05s"><div id="the-map"></div></div>
     </div>
   </div>
 </section>
