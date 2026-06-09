@@ -90,7 +90,7 @@
     nav.scrolled { background: rgba(11,16,13,.95); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(107,124,90,.2); }
     nav.scrolled::before { opacity: 0; }
     .nav-logo { display: flex; align-items: center; gap: .6rem; font-family: 'EB Garamond', serif; font-size: 1.32rem; font-weight: 600; letter-spacing: .05em; color: var(--white); text-decoration: none; text-shadow: 0 1px 12px rgba(0,0,0,.6); }
-    .nav-logo .hl { color: var(--terracotta); }
+    .nav-logo .hl { color: inherit; }
     .nav-logo img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0; box-shadow: 0 2px 10px rgba(0,0,0,.5); }
     .nav-links { display: flex; gap: 1.8rem; list-style: none; }
     .nav-links a { color: var(--stone); text-decoration: none; font-size: .66rem; letter-spacing: .18em; text-transform: uppercase; transition: color .3s; text-shadow: 0 1px 8px rgba(0,0,0,.7); }
@@ -131,7 +131,7 @@
     .hero-content { position: relative; z-index: 10; text-align: center; padding: 0 5vw; }
     .hero-eyebrow { display: inline-block; font-size: .64rem; letter-spacing: .26em; text-transform: uppercase; color: var(--accent-bright); font-weight: 600; margin-bottom: 1.6rem; padding: .45rem 1.1rem; background: rgba(11,16,13,.45); backdrop-filter: blur(4px); border: 1px solid rgba(240,134,63,.35); border-radius: 2px; text-shadow: 0 2px 10px rgba(0,0,0,.9); animation: fadeUp 1.2s .2s ease both; }
     .hero-title { font-family: 'EB Garamond', serif; font-size: clamp(3rem, 7.5vw, 6.6rem); font-weight: 400; line-height: .94; color: var(--white); margin-bottom: 2rem; text-shadow: 0 4px 30px rgba(0,0,0,.65), 0 2px 8px rgba(0,0,0,.5); animation: fadeUp 1.2s .35s ease both; }
-    .hero-title em { font-style: italic; color: var(--terracotta); }
+    .hero-title em { font-style: italic; color: #fff; }
     .hero-sub { font-size: clamp(.82rem, 1.3vw, .95rem); letter-spacing: .06em; color: var(--white); max-width: 500px; margin: 0 auto 2.5rem; text-shadow: 0 2px 16px rgba(0,0,0,.85), 0 1px 4px rgba(0,0,0,.6); animation: fadeUp 1.2s .5s ease both; }
     .hero-cta { display: inline-flex; align-items: center; gap: .75rem; padding: .8rem 2.25rem; background: rgba(11,16,13,.45); backdrop-filter: blur(4px); border: 1px solid rgba(240,134,63,.4); border-radius: 2px; color: var(--accent-bright); text-decoration: none; font-size: .68rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,.9); transition: background .3s, color .3s, border-color .3s; animation: fadeUp 1.2s .65s ease both; min-height: 44px; }
     .hero-cta:hover { background: var(--terracotta); border-color: var(--terracotta); color: var(--white); text-shadow: none; }
@@ -324,7 +324,7 @@
     footer { background: var(--bg); border-top: 1px solid rgba(107,124,90,.15); padding: 3rem 5vw; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
     .footer-brand { display: flex; align-items: center; gap: .6rem; font-family: 'EB Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--white); letter-spacing: .05em; }
     .footer-brand img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; }
-    .footer-brand .hl { color: var(--terracotta); }
+    .footer-brand .hl { color: inherit; }
     .footer-center { font-size: .9rem; letter-spacing: .1em; color: var(--stone-dim); text-align: center; }
     .footer-links { display: flex; gap: 1.5rem; }
     .footer-links a { color: var(--stone-dim); transition: color .3s; min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
@@ -432,10 +432,10 @@
     /* ===== SUNNY LIGHT THEME OVERRIDES ===== */
     /* Nav: light text over the hero photo; light bar with dark text when scrolled */
     .nav-logo, .nav-links a, .lang-switch a, .nav-social a { color: #fdf8ee; }
-    .nav-logo .hl { color: #f0863f; }
+    .nav-logo .hl { color: #fff; }
     nav.scrolled { background: rgba(255,253,247,.95); border-bottom: 1px solid rgba(120,90,50,.18); }
     nav.scrolled .nav-logo, nav.scrolled .nav-links a, nav.scrolled .lang-switch a, nav.scrolled .nav-social a { color: var(--stone); text-shadow: none; }
-    nav.scrolled .nav-logo .hl, nav.scrolled .nav-links a:hover, nav.scrolled .lang-switch a.active, nav.scrolled .nav-social a:hover { color: var(--terracotta); }
+    nav.scrolled .nav-links a:hover, nav.scrolled .lang-switch a.active, nav.scrolled .nav-social a:hover { color: var(--terracotta); }
     nav.scrolled .nav-links a.active { color: var(--terracotta); }
     nav.scrolled .nav-links a::after { background: var(--terracotta); }
 
@@ -631,42 +631,6 @@
           <div class="stat"><div class="num">40+</div><div class="lbl">Επιλεγμένες διαδρομές</div></div>
           <div class="stat"><div class="num">4</div><div class="lbl">Εποχές δράσης</div></div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WEATHER -->
-<section id="weather">
-  <div class="container">
-    <div class="reveal">
-      <p class="section-label">Ζωντανές Συνθήκες</p>
-      <h2 class="section-title">Ο καιρός<br/><em>στο βουνό τώρα</em></h2>
-    </div>
-    <div class="weather-grid">
-      <div class="weather-card reveal" style="transition-delay:.05s">
-        <div class="weather-peak">Ψηλορείτης - 2456μ</div>
-        <div class="weather-temp" id="wt-psilo"><span style="font-size:1rem;color:var(--stone-dim)">Φόρτωση...</span></div>
-        <div class="weather-desc" id="wd-psilo"></div>
-        <div class="weather-wind" id="ww-psilo"></div>
-      </div>
-      <div class="weather-card reveal" style="transition-delay:.1s">
-        <div class="weather-peak">Λευκά Όρη - 2453μ</div>
-        <div class="weather-temp" id="wt-lefka"><span style="font-size:1rem;color:var(--stone-dim)">Φόρτωση...</span></div>
-        <div class="weather-desc" id="wd-lefka"></div>
-        <div class="weather-wind" id="ww-lefka"></div>
-      </div>
-      <div class="weather-card reveal" style="transition-delay:.15s">
-        <div class="weather-peak">Δίκτη - 2148μ</div>
-        <div class="weather-temp" id="wt-dikti"><span style="font-size:1rem;color:var(--stone-dim)">Φόρτωση...</span></div>
-        <div class="weather-desc" id="wd-dikti"></div>
-        <div class="weather-wind" id="ww-dikti"></div>
-      </div>
-      <div class="weather-card reveal" style="transition-delay:.2s">
-        <div class="weather-peak">Αστερούσια - 1231μ</div>
-        <div class="weather-temp" id="wt-aster"><span style="font-size:1rem;color:var(--stone-dim)">Φόρτωση...</span></div>
-        <div class="weather-desc" id="wd-aster"></div>
-        <div class="weather-wind" id="ww-aster"></div>
       </div>
     </div>
   </div>
@@ -868,6 +832,42 @@
       <div class="exp-item reveal" style="transition-delay:.1s"><div class="exp-num">02</div><h3 class="exp-title">Διασχίσεις Φαραγγιών</h3><p class="exp-body">Περπατήστε τους αρχαίους διαδρόμους της Κρήτης που σκάλισαν τα ποτάμια. Σαμαριά, Ίμπρος, Αγία Ειρήνη, Αράδαινα. Κάθε φαράγγι είναι ένας δικός του κόσμος, με επιβλητικούς τοίχους, σπάνια χλωρίδα και μινωικούς απόηχους.</p><div class="exp-tags"><span class="exp-tag">Μισή ή ολόκληρη μέρα</span><span class="exp-tag">Άνοιξη & Φθινόπωρο</span><span class="exp-tag">Μέτριο</span></div></div>
       <div class="exp-item reveal" style="transition-delay:.05s"><div class="exp-num">03</div><h3 class="exp-title">Πεζοπορίες Ανατολής & Νύχτας</h3><p class="exp-body">Δείτε την Κρήτη να ξυπνά από ψηλά. Αναχωρήσεις πριν την αυγή προς ψηλές κορυφογραμμές, όπου το φως σπάει πάνω από το Αιγαίο και ο αέρας είναι δροσερός, καθαρός και απόλυτα δικός σας. Αστέρια στην ανάβαση, χρυσάφι στην κατάβαση.</p><div class="exp-tags"><span class="exp-tag">Ξεκίνημα τα ξημερώματα</span><span class="exp-tag">Καλοκαίρι</span><span class="exp-tag">Εντυπωσιακό</span></div></div>
       <div class="exp-item reveal" style="transition-delay:.15s"><div class="exp-num">04</div><h3 class="exp-title">Πολυήμερες Διασχίσεις</h3><p class="exp-body">Καθηλωτικές πολυήμερες διαδρομές μέσα από τα ορεινά οροπέδια. Κοιμηθείτε σε ορεινά καταφύγια, μαγειρέψτε στη φωτιά, κινηθείτε αργά μέσα από εδάφη που οι περισσότεροι βλέπουν μόνο από κάτω. Η πλήρης εμπειρία.</p><div class="exp-tags"><span class="exp-tag">2-5 ημέρες</span><span class="exp-tag">Άνοιξη-Φθινόπωρο</span><span class="exp-tag">Μικρές ομάδες</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WEATHER -->
+<section id="weather">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Ζωντανές Συνθήκες</p>
+      <h2 class="section-title">Ο καιρός<br/><em>στο βουνό τώρα</em></h2>
+    </div>
+    <div class="weather-grid">
+      <div class="weather-card reveal" style="transition-delay:.05s">
+        <div class="weather-peak">Ψηλορείτης - 2456μ</div>
+        <div class="weather-temp" id="wt-psilo"><span style="font-size:1rem;color:var(--stone-dim)">Φόρτωση...</span></div>
+        <div class="weather-desc" id="wd-psilo"></div>
+        <div class="weather-wind" id="ww-psilo"></div>
+      </div>
+      <div class="weather-card reveal" style="transition-delay:.1s">
+        <div class="weather-peak">Λευκά Όρη - 2453μ</div>
+        <div class="weather-temp" id="wt-lefka"><span style="font-size:1rem;color:var(--stone-dim)">Φόρτωση...</span></div>
+        <div class="weather-desc" id="wd-lefka"></div>
+        <div class="weather-wind" id="ww-lefka"></div>
+      </div>
+      <div class="weather-card reveal" style="transition-delay:.15s">
+        <div class="weather-peak">Δίκτη - 2148μ</div>
+        <div class="weather-temp" id="wt-dikti"><span style="font-size:1rem;color:var(--stone-dim)">Φόρτωση...</span></div>
+        <div class="weather-desc" id="wd-dikti"></div>
+        <div class="weather-wind" id="ww-dikti"></div>
+      </div>
+      <div class="weather-card reveal" style="transition-delay:.2s">
+        <div class="weather-peak">Αστερούσια - 1231μ</div>
+        <div class="weather-temp" id="wt-aster"><span style="font-size:1rem;color:var(--stone-dim)">Φόρτωση...</span></div>
+        <div class="weather-desc" id="wd-aster"></div>
+        <div class="weather-wind" id="ww-aster"></div>
+      </div>
     </div>
   </div>
 </section>
