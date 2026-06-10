@@ -26,7 +26,7 @@
       min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center;
       text-align: center; padding: 2.5rem 1.5rem; overflow-x: hidden;
     }
-    .logo { width: 92px; height: 92px; object-fit: contain; box-shadow: 0 6px 22px rgba(80,55,25,.22); margin-bottom: 1.75rem; }
+    .logo { width: clamp(160px, 45vw, 260px); height: clamp(160px, 45vw, 260px); object-fit: contain; margin-bottom: 1.75rem; filter: drop-shadow(0 4px 18px rgba(0,0,0,.18)); }
     .eyebrow { font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: var(--terracotta); font-weight: 600; margin-bottom: 1.1rem; }
     .code {
       font-family: 'Commissioner', sans-serif; font-weight: 500; line-height: 1;
