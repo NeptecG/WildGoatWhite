@@ -357,7 +357,7 @@
     /* Lightbox */
     .lightbox { position: fixed; inset: 0; z-index: 300; background: rgba(7,10,8,.94); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
     .lightbox.open { opacity: 1; pointer-events: auto; }
-    .lb-stage { position: absolute; inset: 0; overflow: hidden; touch-action: none; }
+    .lb-stage { position: absolute; inset: 0; overflow: hidden; touch-action: none; cursor: grab; }
     .lb-track { display: flex; height: 100%; will-change: transform; }
     .lb-track.anim { transition: transform .4s cubic-bezier(.22,.61,.36,1); }
     .lb-slide { flex: 0 0 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
@@ -1359,7 +1359,7 @@ function closeLightbox() {
 document.getElementById('lbClose').addEventListener('click', closeLightbox);
 document.getElementById('lbPrev').addEventListener('click', e => { e.stopPropagation(); lbSlide(-1); });
 document.getElementById('lbNext').addEventListener('click', e => { e.stopPropagation(); lbSlide(1); });
-lbStage.addEventListener('click', e => { if (e.target.classList.contains('lb-slide')) closeLightbox(); });
+lbStage.addEventListener('click', e => { if (!lbWasDrag && e.target.classList.contains('lb-slide')) closeLightbox(); });
 document.addEventListener('keydown', e => {
   if (!lightbox.classList.contains('open')) return;
   if (e.key === 'Escape') closeLightbox();
@@ -1392,6 +1392,32 @@ lbStage.addEventListener('touchend', () => {
   else lbSlide(0);
   lbDownX = lbDownY = null; lbDx = 0;
 }, { passive: true });
+
+// Mouse drag (desktop)
+let lbMouseDown = false, lbMouseX = 0, lbMouseDx = 0, lbWasDrag = false;
+lbStage.addEventListener('mousedown', e => {
+  if (lbAnimating) return;
+  lbMouseDown = true; lbMouseX = e.clientX; lbMouseDx = 0; lbWasDrag = false;
+  lbTrack.classList.remove('anim');
+  lbStage.style.cursor = 'grabbing';
+});
+window.addEventListener('mousemove', e => {
+  if (!lbMouseDown) return;
+  lbMouseDx = e.clientX - lbMouseX;
+  if (Math.abs(lbMouseDx) > 5) lbWasDrag = true;
+  lbTrack.style.transform = 'translateX(' + (-lbStage.clientWidth + lbMouseDx) + 'px)';
+});
+function lbMouseUp() {
+  if (!lbMouseDown) return;
+  lbMouseDown = false;
+  lbStage.style.cursor = 'grab';
+  const threshold = Math.min(70, lbStage.clientWidth * 0.16);
+  if (lbMouseDx <= -threshold) lbSlide(1);
+  else if (lbMouseDx >= threshold) lbSlide(-1);
+  else lbSlide(0);
+  lbMouseDx = 0;
+}
+window.addEventListener('mouseup', lbMouseUp);
 
 // --- FLORA MODAL: tap a card to read the full story ---
 const floraModal = document.getElementById('floraModal');
