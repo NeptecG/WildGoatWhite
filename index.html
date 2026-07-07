@@ -1315,7 +1315,7 @@ const lbTrack = document.getElementById('lbTrack');
 const lbCounter = document.getElementById('lbCounter');
 const lbImgs = lbTrack.querySelectorAll('.lb-slide img');
 const galleryItems = [...document.querySelectorAll('#galleryGrid .gallery-cell')];
-let lbIndex = 0, lbAnimating = false;
+let lbIndex = 0, lbAnimating = false, lbTimer = null, lbPending = 0;
 
 const lbWrap = i => (i + galleryItems.length) % galleryItems.length;
 const lbData = (i, attr) => galleryItems[lbWrap(i)].getAttribute(attr);
@@ -1332,17 +1332,26 @@ function renderSlides() {
   lbCap.textContent = lbData(lbIndex, 'data-cap') || '';
   lbCounter.textContent = (lbIndex + 1) + ' / ' + galleryItems.length;
   lbPlaceTrack();
+  [lbIndex - 2, lbIndex + 2].forEach(i => { const s = lbData(i, 'data-full'); if (s) new Image().src = s; }); // warm neighbours
+}
+function lbCommit() { // finish any in-flight slide instantly so a new input never gets dropped
+  if (!lbAnimating) return;
+  clearTimeout(lbTimer);
+  lbIndex = lbWrap(lbIndex + lbPending);
+  lbPending = 0; lbAnimating = false;
+  renderSlides();
 }
 function lbSlide(delta) { // delta: -1 prev, +1 next, 0 snap back
-  if (lbAnimating) return;
+  lbCommit();
+  if (!delta) { lbPlaceTrack(); return; }
   const w = lbStage.clientWidth;
-  lbAnimating = true;
+  lbAnimating = true; lbPending = delta;
   lbTrack.classList.add('anim');
   lbTrack.style.transform = 'translateX(' + (-w - delta * w) + 'px)';
-  setTimeout(() => {
-    if (delta) lbIndex = lbWrap(lbIndex + delta);
+  lbTimer = setTimeout(() => {
+    lbIndex = lbWrap(lbIndex + lbPending);
+    lbPending = 0; lbAnimating = false;
     renderSlides();
-    lbAnimating = false;
   }, prefersReduce ? 20 : 420);
 }
 function openLightbox(cell) {
@@ -1372,7 +1381,7 @@ window.addEventListener('resize', () => { if (lightbox.classList.contains('open'
 // Pointer capture routes move/up back to the stage even if the cursor leaves the window mid-drag.
 let lbDownX = 0, lbDownY = 0, lbDragging = false, lbDx = 0, lbWasDrag = false;
 lbStage.addEventListener('pointerdown', e => {
-  if (lbAnimating) return;
+  lbCommit(); // a drag started mid-animation commits the in-flight slide, then begins fresh
   lbDownX = e.clientX; lbDownY = e.clientY; lbDragging = true; lbDx = 0; lbWasDrag = false;
   lbTrack.classList.remove('anim');
   lbStage.style.cursor = 'grabbing';
