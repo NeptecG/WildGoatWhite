@@ -354,6 +354,12 @@
     /* Gallery + mountain photos are clickable */
     .gallery-cell, .mountain-card { cursor: zoom-in; }
 
+    /* Themed blur-up placeholder shown while gallery/card photos lazy-load */
+    .gallery-cell, .mountain-card, .flora-card { background: radial-gradient(ellipse 120% 100% at 50% 35%, rgba(190,84,31,.12) 0%, rgba(190,84,31,0) 60%), linear-gradient(135deg, #ece2cf 0%, #f3ead8 52%, #e5d9c1 100%); }
+    .gallery-photo, .card-photo, .flora-photo { transition: opacity .7s ease; }
+    .gallery-photo.is-lazy, .card-photo.is-lazy, .flora-photo.is-lazy { opacity: 0; }
+    .gallery-photo.is-loaded, .card-photo.is-loaded, .flora-photo.is-loaded { opacity: 1; }
+
     /* Lightbox */
     .lightbox { position: fixed; inset: 0; z-index: 300; background: rgba(7,10,8,.94); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .3s ease; }
     .lightbox.open { opacity: 1; pointer-events: auto; }
@@ -1146,13 +1152,19 @@ const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matc
     entries.forEach(e => {
       if (!e.isIntersecting) return;
       const el = e.target;
-      if (el.dataset.bg) { el.style.backgroundImage = "url('" + el.dataset.bg + "')"; el.removeAttribute('data-bg'); }
+      if (el.dataset.bg) {
+        const url = el.dataset.bg;
+        const pre = new Image();
+        pre.onload = () => { el.style.backgroundImage = "url('" + url + "')"; el.classList.add('is-loaded'); }; // fade in over the themed placeholder
+        pre.src = url;
+        el.removeAttribute('data-bg');
+      }
       obs.unobserve(el);
     });
   }, { rootMargin: '400px 0px' });
   document.querySelectorAll('.gallery-photo, .card-photo, .flora-photo').forEach(el => {
     const m = (el.style.backgroundImage || '').match(/url\(["']?(.*?)["']?\)/);
-    if (m && m[1]) { el.dataset.bg = m[1]; el.style.backgroundImage = 'none'; io.observe(el); }
+    if (m && m[1]) { el.dataset.bg = m[1]; el.style.backgroundImage = 'none'; el.classList.add('is-lazy'); io.observe(el); }
   });
 })();
 
